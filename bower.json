@@ -19,10 +19,11 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^1.1.0",
-    "ipfs-upload": "^0.0.10",
     "paper-input": "^1.1.11",
     "locals-item": "https://github.com/locals-world/locals-elements-item.git",
-    "locals-button": "https://github.com/locals-world/locals-elements-button.git"
+    "locals-button": "https://github.com/locals-world/locals-elements-button.git",
+    "firebase-element": "GoogleWebComponents/firebase-element#^1.0.12",
+    "iron-pages": "^1.0.7"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",

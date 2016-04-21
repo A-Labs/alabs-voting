@@ -9,11 +9,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../web3-wallet/web3-wallet.html">
-<link rel="import" href="../ipfs-upload/ipfs-upload.html">
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../locals-button/locals-button.html">
 <link rel="import" href="../locals-item/locals-item.html">
+<link rel="import" href="../iron-pages/iron-pages.html">
+
 <link rel="import" href="../iron-selector/iron-selector.html">
+<link rel="import" href="../firebase-element/firebase.html">
 
 <!--
 An element providing a solution to no problem in particular.
@@ -39,17 +41,26 @@ Example:
 
     <web3-wallet password="defaultpassword" host="http://109.123.70.141:8545" account="{{account}}" web3="{{web3}}" keystore="{{keystore}}"></web3-wallet>
 
-    <ipfs-upload id="ipfsupload" host="/ip4/109.123.70.141/tcp/5001" ipfs="{{ipfs}}" hash="{{ipfshash}}"></ipfs-upload>
-
-    <h1>&lt;alabs-voting&gt;</h1>
+    <iron-pages selected="{{state}}">
+      <section>
+        <h1>&lt;alabs-voting&gt;</h1>
     <p>{{account}}</p>
-    <paper-input label="new item" bind-value="{{newitem}}" value="{{newitem}}"></paper-input>
     <locals-button green on-tap="createNew">new</locals-button>
-    <iron-selector selected="0">
-      <template is="dom-repeat" items="{{votingitemslist}}">
-        <locals-item>{{item.item}}</locals-item>
+    <iron-selector selected="{{selecteditem}}" on-iron-select="_showdetail">
+      <template is="dom-repeat" items="{{dataobject}}">
+        <locals-item>{{item.data.subject}}</locals-item>
       </template>
     </iron-selector>
+      </section>
+      <section>
+        <alabs-proposal ipfshash="{{selectedhash}}"></alabs-proposal>
+      </section>
+      <section>
+        <alabs-proposal edit></alabs-proposal>
+      </section>
+    </iron-pages>
+
+    
   </template>
 
 </dom-module>
@@ -79,24 +90,8 @@ Example:
         observer: '_web3'
       },
 
-      ipfs: {
-        // The IPFS object exposes the ipfs-js api.
-        type: Object
-      },
-
-      ipfshash: {
-        // The ipfs hash gets a value from the web3 whisper topic. Upon getting the hash, we resolve (cat) the hash, so we get the JSON object used to populate the votingitemslist.
-        type: String,
-        observer: '_ipfshash'
-      },
-
       dataobject: {
         // this is where our app gets it's data!
-        type: Array,
-        observer: '_dataobject'
-      },
-
-      votingitemslist: {
         type: Array,
         observer: '_dataobject'
       }
@@ -107,6 +102,7 @@ Example:
 
     ready: function() {
       this.votingitemslist = [];
+      this.state = 0;
       // `ready` is called after all elements have been configured, but
       // propagates bottom-up. This element's children are ready, but parents
       // are not.
@@ -132,25 +128,35 @@ Example:
     },
 
     _web3: function(){
-
+      var self = this;
       // Here we subscribe to the clubid topic. When the IPFS hash is changed, we get to know it here.
+      var dataobject = [];
+      var fb = new Firebase('https://sponnet.firebaseio.com/alabs/proposals/');
+      fb.on('value', function(snap){
+        //console.log('ello fb ',snap.val());
+        self.dataobject = self.object2array(snap.val());
+      });
 
-        var self = this;
+      console.log(dataobject);
+      self.dataobject = dataobject;
+
+      //this.dataobject = dataobject;
+
         console.log('web3 started');
 
-        this.identity = this.web3.shh.newIdentity();
+        // this.identity = this.web3.shh.newIdentity();
 
-        var filter = this.web3.shh.filter({
-          "topics": [this.web3.fromAscii(this.clubid)],
-        });
+        // var filter = this.web3.shh.filter({
+        //   "topics": [this.web3.fromAscii(this.clubid)],
+        // });
 
-        filter.watch(function(error, result) {
-          if (!error)
-            console.log("ipfs hash? ", self.web3.toAscii(result.payload), JSON.parse(self.web3.toAscii(result.payload)));
-            var result = JSON.parse(self.web3.toAscii(result.payload));
-            console.log('hash is ', result.ipfshash);
-            self.ipfshash = result.ipfshash; 
-        });
+        // filter.watch(function(error, result) {
+        //   if (!error)
+        //     console.log("ipfs hash? ", self.web3.toAscii(result.payload), JSON.parse(self.web3.toAscii(result.payload)));
+        //     var result = JSON.parse(self.web3.toAscii(result.payload));
+        //     console.log('hash is ', result.ipfshash);
+        //     self.ipfshash = result.ipfshash; 
+        // });
 
         //this.whisperpost("hash");
 
@@ -169,46 +175,21 @@ Example:
       });
     },
 
-    _ipfshash: function(){
-      var self = this;
-      this.ipfs.cat(this.ipfshash).then(function(res){
-        var buf = '';
-          res
-          .on('error', (err) => {
-            expect(err).to.not.exist
-          })
-          .on('data', (data) => {
-            buf += data
-          })
-          .on('end', () => {
-            console.log(buf);
-            self.votingitemslist = JSON.parse(buf);
-          });
-      });
+    createNew: function(){
+      this.state = 2;
     },
 
     _dataobject: function(){
       var self = this;
-
-
       //this.items = this.object2array(this.dataobject);
-
-      var dataobject = this.dataobject;
-
-      this.ipfs.add([new this.ipfs.Buffer(JSON.stringify(dataobject))], function(err, res){
-        if(!err){
-          console.log('ipfs result: ',res[0].Hash);
-          self.ipfshash = res[0].Hash;
-          self.whisperpost(res[0].Hash);
-        }
-      });
+      //var dataobject = this.dataobject;
+      console.log(this.dataobject);
     },
 
-    createNew: function(){
-      this.push('votingitemslist', { item: this.newitem });
-      console.log(this.items);
-      this.newitem = '';
-      this.dataobject = this.votingitemslist;
+    _showdetail: function(){
+      console.log(this.dataobject[this.selecteditem]);
+      this.selectedhash = this.dataobject[this.selecteditem].data.ipfshash;
+      this.state = 1;
     },
 
     object2array: function(input){
