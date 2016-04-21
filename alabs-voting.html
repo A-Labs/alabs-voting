@@ -39,13 +39,15 @@ Example:
       }
     </style>
 
-    <web3-wallet password="defaultpassword" host="http://109.123.70.141:8545" account="{{account}}" web3="{{web3}}" keystore="{{keystore}}"></web3-wallet>
+    <web3-wallet password="defaultpassword" host="http://109.123.70.141:8545" account="{{account}}" web3="{{web3}}" balance="{{balance}}" keystore="{{keystore}}"></web3-wallet>
 
     <iron-pages selected="{{state}}">
       <section>
         <h1>&lt;alabs-voting&gt;</h1>
     <p>{{account}}</p>
-    <locals-button green on-tap="createNew">new</locals-button>
+    <p>Ξ<span>{{balance}}</span></p>
+    <locals-button green on-tap="createNew">new proposal</locals-button>
+    <h2>Proposals:</h2>
     <iron-selector selected="{{selecteditem}}" on-iron-select="_showdetail">
       <template is="dom-repeat" items="{{dataobject}}">
         <locals-item>{{item.data.subject}}</locals-item>
@@ -59,6 +61,10 @@ Example:
       <section>
         <locals-button green on-tap="back">back</locals-button>
         <alabs-proposal edit></alabs-proposal>
+      </section>
+      <section>
+        <locals-button green on-tap="giveeth">Give me ether dawg</locals-button>
+        <div>You have Ξ<span>{{balance}}</span></div>
       </section>
     </iron-pages>
 
@@ -103,7 +109,6 @@ Example:
     // Element Lifecycle
 
     ready: function() {
-      this.votingitemslist = [];
       this.state = 0;
       // `ready` is called after all elements have been configured, but
       // propagates bottom-up. This element's children are ready, but parents
