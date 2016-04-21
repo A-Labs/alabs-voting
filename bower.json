@@ -24,7 +24,9 @@
     "locals-button": "https://github.com/locals-world/locals-elements-button.git",
     "firebase-element": "GoogleWebComponents/firebase-element#^1.0.12",
     "iron-pages": "^1.0.7",
-    "alabs-proposal": "https://github.com/A-Labs/alabs-proposal.git"
+    "alabs-proposal": "https://github.com/A-Labs/alabs-proposal.git",
+    "web3-wallet": "^0.0.5",
+    "neon-animation": "^1.2.1"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",

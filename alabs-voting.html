@@ -12,10 +12,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../locals-button/locals-button.html">
 <link rel="import" href="../locals-item/locals-item.html">
+<link rel="import" href="../locals-style/locals-style.html">
 <link rel="import" href="../iron-pages/iron-pages.html">
 <link rel="import" href="../alabs-proposal/alabs-proposal.html">
 <link rel="import" href="../iron-selector/iron-selector.html">
 <link rel="import" href="../firebase-element/firebase.html">
+<link rel="import" href="../neon-animation/neon-animated-pages.html">
+<link rel="import" href="../neon-animation/neon-animation.html">
 
 <!--
 An element providing a solution to no problem in particular.
@@ -37,36 +40,96 @@ Example:
         display: block;
         box-sizing: border-box;
       }
+
+      neon-animated-pages {
+      }
+     .canvas {
+        @apply(--locals-canvas);
+      }
+     .whitespace {
+      height: 20px;
+     }
+      h1 {
+       @apply(--locals-font-h1);
+      }
+      h2 {
+       @apply(--locals-font-h2);
+      }
+      h3 {
+       @apply(--locals-font-h3);
+      }
+      h4 {
+       @apply(--locals-font-h4);
+      }
+      p {
+       @apply(--locals-font-body1);
+      }
+      small {
+       @apply(--locals-font-small);
+       color: rgba(0,0,0,0.75);
+      }
+
+
+      .props {
+        width: 100%;
+        max-width: 900px;
+      }
+
+
+      .prop {
+        box-sizing: border-box;
+        padding: 14px;
+        font-size: 32px;
+        border-bottom: 1px dashed var(--locals-grey2); 
+      }
+      .prop:hover {
+        margin-top: -1px;
+        padding-top: 15px;
+
+        box-sizing: border-box;
+        background-color: var(--locals-grey2);
+        border-bottom: 1px solid var(--locals-grey2); 
+      }
+
+
     </style>
 
     <web3-wallet password="defaultpassword" host="http://109.123.70.141:8545" account="{{account}}" web3="{{web3}}" balance="{{balance}}" keystore="{{keystore}}"></web3-wallet>
 
-    <iron-pages selected="{{state}}">
-      <section>
-        <h1>&lt;alabs-voting&gt;</h1>
-    <p>{{account}}</p>
-    <p>Ξ<span>{{balance}}</span></p>
-    <locals-button on-tap="createNew">new proposal</locals-button>
-    <h2>Proposals:</h2>
-    <iron-selector selected="{{selecteditem}}" on-iron-select="_showdetail">
-      <template is="dom-repeat" items="{{dataobject}}">
-        <locals-item>{{item.data.subject}}</locals-item>
-      </template>
-    </iron-selector>
-      </section>
-      <section>
+    <neon-animated-pages selected="{{state}}"
+      entry-animation="{{entryAnimation}}"
+      exit-animation="{{exitAnimation}}">
+
+      <neon-animatable>
+      <div class="canvas">
+        <div class="props">
+        <locals-button txtcolor="blue" on-tap="createNew">new proposal</locals-button>
+        <div class="whitespace"></div>
+        <iron-selector selected="{{selecteditem}}" on-iron-select="_showdetail">
+          <template is="dom-repeat" items="{{dataobject}}">
+            <locals-item class="prop">{{item.data.subject}}</locals-item>
+          </template>
+        </iron-selector>
+        </div>
+      </div>
+      </neon-animatable>
+
+      <neon-animatable>
         <locals-button on-tap="back">back</locals-button>
         <alabs-proposal ipfshash="{{selectedhash}}"></alabs-proposal>
-      </section>
-      <section>
+      </neon-animatable>
+
+      <neon-animatable>
+      <div class="canvas">
         <locals-button on-tap="back">back</locals-button>
         <alabs-proposal edit on-proposal-added="back"></alabs-proposal>
-      </section>
-      <section>
+      </div>
+      </neon-animatable>
+      <neon-animatable>
         <locals-button on-tap="giveeth">Give me Ξ5</locals-button>
         <div>You have Ξ<span>{{balance}}</span></div>
-      </section>
-    </iron-pages>
+      </neon-animatable>
+    </neon-animated-pages>
 
     
   </template>
@@ -110,6 +173,9 @@ Example:
 
     ready: function() {
       this.state = 0;
+      this.entryAnimation = "slide-from-right-animation";
+      this.exitAnimation = "slide-left-animation";
+
       // `ready` is called after all elements have been configured, but
       // propagates bottom-up. This element's children are ready, but parents
       // are not.

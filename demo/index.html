@@ -21,20 +21,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <alabs-voting clubid="alabsvoting003"></alabs-voting>
 
     <script>
-      var seedElement = document.querySelector('alabs-voting');
-      
-      document.querySelector('#saybtn').addEventListener('click', function() {
-        alert(seedElement.sayHello('Hallo!'));
-      });
-      
-      document.querySelector('#laserbtn').addEventListener('click', function() {
-        seedElement.fireLasers();
-      });
-      
-      document.addEventListener("alabs-voting-lasers", function(e) {
-        console.log(e.detail.sound);
-      });
-      
     </script>
 
   </body>
