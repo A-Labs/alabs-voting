@@ -46,7 +46,7 @@ Example:
         <h1>&lt;alabs-voting&gt;</h1>
     <p>{{account}}</p>
     <p>Ξ<span>{{balance}}</span></p>
-    <locals-button green on-tap="createNew">new proposal</locals-button>
+    <locals-button on-tap="createNew">new proposal</locals-button>
     <h2>Proposals:</h2>
     <iron-selector selected="{{selecteditem}}" on-iron-select="_showdetail">
       <template is="dom-repeat" items="{{dataobject}}">
@@ -55,15 +55,15 @@ Example:
     </iron-selector>
       </section>
       <section>
-        <locals-button green on-tap="back">back</locals-button>
+        <locals-button on-tap="back">back</locals-button>
         <alabs-proposal ipfshash="{{selectedhash}}"></alabs-proposal>
       </section>
       <section>
-        <locals-button green on-tap="back">back</locals-button>
-        <alabs-proposal edit></alabs-proposal>
+        <locals-button on-tap="back">back</locals-button>
+        <alabs-proposal edit on-proposal-added="back"></alabs-proposal>
       </section>
       <section>
-        <locals-button green on-tap="giveeth">Give me ether dawg</locals-button>
+        <locals-button on-tap="giveeth">Give me Ξ5</locals-button>
         <div>You have Ξ<span>{{balance}}</span></div>
       </section>
     </iron-pages>
