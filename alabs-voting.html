@@ -13,7 +13,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../locals-button/locals-button.html">
 <link rel="import" href="../locals-item/locals-item.html">
 <link rel="import" href="../iron-pages/iron-pages.html">
-
+<link rel="import" href="../alabs-proposal/alabs-proposal.html">
 <link rel="import" href="../iron-selector/iron-selector.html">
 <link rel="import" href="../firebase-element/firebase.html">
 
@@ -53,9 +53,11 @@ Example:
     </iron-selector>
       </section>
       <section>
+        <locals-button green on-tap="back">back</locals-button>
         <alabs-proposal ipfshash="{{selectedhash}}"></alabs-proposal>
       </section>
       <section>
+        <locals-button green on-tap="back">back</locals-button>
         <alabs-proposal edit></alabs-proposal>
       </section>
     </iron-pages>
@@ -179,6 +181,10 @@ Example:
       this.state = 2;
     },
 
+    back: function(){
+      this.state = 0;
+    },
+
     _dataobject: function(){
       var self = this;
       //this.items = this.object2array(this.dataobject);
@@ -190,6 +196,7 @@ Example:
       console.log(this.dataobject[this.selecteditem]);
       this.selectedhash = this.dataobject[this.selecteditem].data.ipfshash;
       this.state = 1;
+      this.selecteditem = null;
     },
 
     object2array: function(input){
