@@ -42,8 +42,7 @@ Example:
         box-sizing: border-box;
       }
 
-      neon-animated-pages {
-      }
+
      .canvas {
         @apply(--locals-canvas);
       }
@@ -86,17 +85,24 @@ Example:
       .prop:hover {
         margin-top: -1px;
         padding-top: 15px;
+        padding-left: 18px;
 
         box-sizing: border-box;
-        background-color: var(--locals-grey2);
-        border-bottom: 1px solid var(--locals-grey2); 
+        background-color: var(--locals-grey1);
+        border-bottom: 1px solid var(--locals-grey1); 
       }
+
+      .thisone {
+        opacity: 1;
+      }
+
 
 
     </style>
 
     <web3-wallet password="defaultpassword" host="http://109.123.70.141:8545" account="{{account}}" web3="{{web3}}" balance="{{balance}}" keystore="{{keystore}}"></web3-wallet>
 
+<<<<<<< HEAD
     <iron-ajax
       id="ajax"
       handle-as="json"
@@ -108,9 +114,53 @@ Example:
           <locals-button txtcolor="green" on-tap="askEth">gimme eth</locals-button>
       </div>
 
-    <neon-animated-pages selected="{{state}}">
 
-      <neon-animatable>
+    <neon-animated-pages
+      selected="{{state}}"
+      attr-for-selected="key"
+      entry-animation="{{entryAnimation}}"
+      exit-animation="{{exitAnimation}}">
+
+
+     <neon-animatable key="0">
+      <div class="canvas">
+        <div class="props">
+        <locals-button txtcolor="blue" on-tap="createNew">new proposal</locals-button>
+        <div class="whitespace"></div>
+          <template is="dom-repeat" items="{{dataobject}}">
+            <locals-item class="prop" on-tap="_showdetail" key="{{index}}">{{item.data.subject}}</locals-item>
+          </template>
+        </div>
+      </div>
+      </neon-animatable>
+
+      <neon-animatable key="1">
+      <div class="canvas">
+        <alabs-proposal class="props" ipfshash="{{selectedhash}}"></alabs-proposal>
+      </div>
+      </neon-animatable>
+
+
+      <neon-animatable key="2">
+      <div class="canvas">
+        <locals-button on-tap="back">back</locals-button>
+        <alabs-proposal edit on-proposal-added="back"></alabs-proposal>
+      </div>
+      </neon-animatable>
+      
+      <neon-animatable key="3">
+        <locals-button on-tap="giveeth">Give me Ξ5</locals-button>
+        <div>You have Ξ<span>{{balance}}</span></div>
+      </neon-animatable>
+
+
+
+
+    </neon-animated-pages>
+<!-- 
+
+<iron-pages selected="{{state}}">
+      <section>
       <div class="canvas">
         <div class="props">
         <locals-button txtcolor="blue" on-tap="createNew">new proposal</locals-button>
@@ -122,28 +172,27 @@ Example:
         </iron-selector>
         </div>
       </div>
-      </neon-animatable>
+      </section>
 
-      <neon-animatable>
-        <div class="canvas">
+      <section class="thisone">
+      <div class="canvas">
         <locals-button on-tap="back">back</locals-button>
-        <alabs-proposal class="props" ipfshash="{{selectedhash}}"></alabs-proposal>
+        <alabs-proposal ipfshash="{{selectedhash}}"></alabs-proposal>
       </div>
-      </neon-animatable>
+      </section>
 
-      <neon-animatable>
+      <section>
       <div class="canvas">
         <locals-button on-tap="back">back</locals-button>
         <alabs-proposal edit on-proposal-added="back"></alabs-proposal>
       </div>
-      </neon-animatable>
-      <neon-animatable>
+      </section>
+      <section>
         <locals-button on-tap="giveeth">Give me Ξ5</locals-button>
         <div>You have Ξ<span>{{balance}}</span></div>
-      </neon-animatable>
-    </neon-animated-pages>
-
-    
+      </section>
+</iron-pages>
+ -->    
   </template>
 
 </dom-module>
@@ -182,7 +231,24 @@ Example:
       balance: {
         type: Number,
         observer: '_balance'
+      },
+
+      entryAnimation: {
+        type: String,
+        value:"slide-from-right-animation"
+      },
+      exitAnimation: {
+        type: String,
+        value:"slide-left-animation"
+      },
+
+      state: {
+        // this is where our app gets it's data!
+        type: Number,
+        observer: '_state'
       }
+
+
 
     },
 
@@ -281,12 +347,12 @@ Example:
       console.log(this.dataobject);
     },
 
-    _showdetail: function(){
-      console.log(this.dataobject[this.selecteditem]);
-      this.selectedhash = this.dataobject[this.selecteditem].data.ipfshash;
-      console.log(this.selectedhash);
+    _showdetail: function(e){
+      // console.log(this.dataobject[this.selecteditem]);
+      this.selectedhash = this.dataobject[e.target.key].data.ipfshash;
       this.state = 1;
-      //this.selecteditem = null;
+      console.log('dit is uit _showdetail', e.target.key, 'ANDS THIS IS THE HASH:', this.selectedhash);
+      // this.selecteditem = null;
 
     },
 
@@ -314,6 +380,11 @@ Example:
         }
       };
       return newarray;
+    },
+
+
+    _state: function(){
+      console.log("State is=", this.state);
     }
 
 
