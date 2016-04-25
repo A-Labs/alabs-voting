@@ -96,9 +96,7 @@ Example:
 
     <web3-wallet password="defaultpassword" host="http://109.123.70.141:8545" account="{{account}}" web3="{{web3}}" balance="{{balance}}" keystore="{{keystore}}"></web3-wallet>
 
-    <neon-animated-pages selected="{{state}}"
-      entry-animation="{{entryAnimation}}"
-      exit-animation="{{exitAnimation}}">
+    <neon-animated-pages selected="{{state}}">
 
       <neon-animatable>
       <div class="canvas">
@@ -116,7 +114,7 @@ Example:
 
       <neon-animatable>
         <locals-button on-tap="back">back</locals-button>
-        <alabs-proposal ipfshash="{{selectedhash}}"></alabs-proposal>
+        <alabs-proposal class="props" ipfshash="{{selectedhash}}"></alabs-proposal>
       </neon-animatable>
 
       <neon-animatable>
@@ -208,6 +206,7 @@ Example:
       fb.on('value', function(snap){
         //console.log('ello fb ',snap.val());
         self.dataobject = self.object2array(snap.val());
+        self.dataobject.reverse();
       });
 
       console.log(dataobject);
@@ -266,8 +265,10 @@ Example:
     _showdetail: function(){
       console.log(this.dataobject[this.selecteditem]);
       this.selectedhash = this.dataobject[this.selecteditem].data.ipfshash;
+      console.log(this.selectedhash);
       this.state = 1;
-      this.selecteditem = null;
+      //this.selecteditem = null;
+
     },
 
     object2array: function(input){
@@ -280,6 +281,7 @@ Example:
       };
       return newarray;
     }
+
 
   });
 
