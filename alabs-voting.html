@@ -19,6 +19,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../firebase-element/firebase.html">
 <link rel="import" href="../neon-animation/neon-animated-pages.html">
 <link rel="import" href="../neon-animation/neon-animation.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
 
 <!--
 An element providing a solution to no problem in particular.
@@ -96,6 +97,17 @@ Example:
 
     <web3-wallet password="defaultpassword" host="http://109.123.70.141:8545" account="{{account}}" web3="{{web3}}" balance="{{balance}}" keystore="{{keystore}}"></web3-wallet>
 
+    <iron-ajax
+      id="ajax"
+      handle-as="json"
+      on-response="hresponse"
+      debounce-duration="300"></iron-ajax>
+
+      <div class="canvas">
+        <p class="small">Current eth balance for account <span>{{account}}</span>: <span>{{balans}}</span></p>
+          <locals-button txtcolor="green" on-tap="askEth">gimme eth</locals-button>
+      </div>
+
     <neon-animated-pages selected="{{state}}">
 
       <neon-animatable>
@@ -113,8 +125,10 @@ Example:
       </neon-animatable>
 
       <neon-animatable>
+        <div class="canvas">
         <locals-button on-tap="back">back</locals-button>
         <alabs-proposal class="props" ipfshash="{{selectedhash}}"></alabs-proposal>
+      </div>
       </neon-animatable>
 
       <neon-animatable>
@@ -163,6 +177,11 @@ Example:
         // this is where our app gets it's data!
         type: Array,
         observer: '_dataobject'
+      },
+
+      balance: {
+        type: Number,
+        observer: '_balance'
       }
 
     },
@@ -269,6 +288,21 @@ Example:
       this.state = 1;
       //this.selecteditem = null;
 
+    },
+
+    _balance: function(){
+        this.balans = this.balance / 1e18;
+      },
+
+    askEth: function(){
+      //console.log('send me 1 testnet ether DAWG!');
+      this.$.ajax.url = 'http://faucet.ma.cx:3000/donate/' + this.account;
+      this.$.ajax.generateRequest();
+    },
+
+    hresponse: function(argument) {
+      //console.log('iets?');
+      //console.log(argument);
     },
 
     object2array: function(input){
