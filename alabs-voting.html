@@ -101,11 +101,13 @@ Example:
 
     <web3-wallet password="defaultpassword" host="http://109.123.70.141:8545" account="{{account}}" web3="{{web3}}" balance="{{balance}}" keystore="{{keystore}}"></web3-wallet>
 
+
     <neon-animated-pages
       selected="{{state}}"
       attr-for-selected="key"
       entry-animation="{{entryAnimation}}"
       exit-animation="{{exitAnimation}}">
+
 
      <neon-animatable key="0">
       <div class="canvas">
@@ -122,8 +124,7 @@ Example:
 
       <neon-animatable key="1">
       <div class="canvas">
-        <locals-button on-tap="back">back</locals-button>
-        <alabs-proposal ipfshash="{{selectedhash}}"></alabs-proposal>
+        <alabs-proposal class="props" ipfshash="{{selectedhash}}"></alabs-proposal>
       </div>
       </neon-animatable>
 
@@ -273,6 +274,7 @@ Example:
       fb.on('value', function(snap){
         //console.log('ello fb ',snap.val());
         self.dataobject = self.object2array(snap.val());
+        self.dataobject.reverse();
       });
 
       console.log(dataobject);
@@ -328,12 +330,22 @@ Example:
       console.log(this.dataobject);
     },
 
+<<<<<<< HEAD
     _showdetail: function(e){
       // console.log(this.dataobject[this.selecteditem]);
       this.selectedhash = this.dataobject[e.target.key].data.ipfshash;
       this.state = 1;
       console.log('dit is uit _showdetail', e.target.key, 'ANDS THIS IS THE HASH:', this.selectedhash);
       // this.selecteditem = null;
+=======
+    _showdetail: function(){
+      console.log(this.dataobject[this.selecteditem]);
+      this.selectedhash = this.dataobject[this.selecteditem].data.ipfshash;
+      console.log(this.selectedhash);
+      this.state = 1;
+      //this.selecteditem = null;
+
+>>>>>>> fd64a251df37ba15d77e9c0784e5986e54809313
     },
 
     object2array: function(input){
@@ -351,6 +363,7 @@ Example:
     _state: function(){
       console.log("State is=", this.state);
     }
+
 
   });
 
