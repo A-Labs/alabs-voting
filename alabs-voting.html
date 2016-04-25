@@ -330,22 +330,13 @@ Example:
       console.log(this.dataobject);
     },
 
-<<<<<<< HEAD
     _showdetail: function(e){
       // console.log(this.dataobject[this.selecteditem]);
       this.selectedhash = this.dataobject[e.target.key].data.ipfshash;
       this.state = 1;
       console.log('dit is uit _showdetail', e.target.key, 'ANDS THIS IS THE HASH:', this.selectedhash);
       // this.selecteditem = null;
-=======
-    _showdetail: function(){
-      console.log(this.dataobject[this.selecteditem]);
-      this.selectedhash = this.dataobject[this.selecteditem].data.ipfshash;
-      console.log(this.selectedhash);
-      this.state = 1;
-      //this.selecteditem = null;
 
->>>>>>> fd64a251df37ba15d77e9c0784e5986e54809313
     },
 
     object2array: function(input){
