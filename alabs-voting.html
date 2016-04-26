@@ -48,10 +48,6 @@ Example:
         @apply(--locals-canvas);
       }
 
-     .wide {
-        width:100%;
-      }
-
      .whitespace {
       height: 20px;
      }
@@ -114,9 +110,10 @@ Example:
       on-response="hresponse"
       debounce-duration="300"></iron-ajax>
 
-      <div class="wide">
+      <div class="canvas">
         <p class="small">Current eth balance for account <span>{{account}}</span>: <span>{{balans}}</span></p>
-          <locals-button txtcolor="green" on-tap="askEth">gimme eth</locals-button>
+        <div class="whitespace"></div>
+          <locals-button icon="addether" on-tap="askEth" txtcolor="darkblue">gimme eth</locals-button>
       </div>
 
 
