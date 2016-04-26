@@ -109,10 +109,8 @@ Example:
       debounce-duration="300"></iron-ajax>
 
       <div class="canvas">
-        <p class="small">Current eth balance for account <span>{{account}}</span>: <span>{{balans}}</span></p>
-          <locals-button txtcolor="green" on-tap="askEth">gimme eth</locals-button>
+        <locals-button txtcolor="green" on-tap="askEth">Balance: Ξ <span>{{balans}}</span></locals-button>
       </div>
-
 
     <neon-animated-pages
       selected="{{state}}"
@@ -120,11 +118,10 @@ Example:
       entry-animation="{{entryAnimation}}"
       exit-animation="{{exitAnimation}}">
 
-
      <neon-animatable key="0">
       <div class="canvas">
         <div class="props">
-        <locals-button txtcolor="blue" on-tap="createNew">new proposal</locals-button>
+        <locals-button txtcolor="blue" on-tap="createNew">New proposal: Ξ 2</locals-button>
         <div class="whitespace"></div>
           <template is="dom-repeat" items="{{dataobject}}">
             <locals-item class="prop" on-tap="_showdetail" key="{{index}}">{{item.data.subject}}</locals-item>
@@ -135,10 +132,10 @@ Example:
 
       <neon-animatable key="1">
       <div class="canvas">
+        <locals-button on-tap="back">back</locals-button>
         <alabs-proposal class="props" ipfshash="{{selectedhash}}"></alabs-proposal>
       </div>
       </neon-animatable>
-
 
       <neon-animatable key="2">
       <div class="canvas">
@@ -147,14 +144,6 @@ Example:
       </div>
       </neon-animatable>
       
-      <neon-animatable key="3">
-        <locals-button on-tap="giveeth">Give me Ξ5</locals-button>
-        <div>You have Ξ<span>{{balance}}</span></div>
-      </neon-animatable>
-
-
-
-
     </neon-animated-pages>
 <!-- 
 
