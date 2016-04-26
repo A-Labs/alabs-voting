@@ -133,10 +133,12 @@ Example:
         <locals-button txtcolor="blue" on-tap="createNew">new proposal</locals-button>
         <div class="whitespace"></div>
           <template is="dom-repeat" items="{{dataobject}}">
-            <locals-item class="prop" on-tap="_showdetail" key="{{index}}">{{item.data.subject}}</locals-item>
+            <div class="bababa" on-tap="_showdetail">
+              <locals-item class="prop" key="{{index}}">{{item.data.subject}}</locals-item>
+              <iron-collapse id="collapse">??</iron-collapse>
+            </div>
           </template>
         </div>
-        <iron-collapse id="collapse">??</iron-collapse>
       </div>
       </neon-animatable>
 
@@ -359,7 +361,8 @@ Example:
       this.selectedhash = this.dataobject[e.target.key].data.ipfshash;
       // this.state = 1;
       // console.log('dit is uit _showdetail', e.target.key, 'ANDS THIS IS THE HASH:', this.selectedhash);
-      this.$.collapse.toggle();
+      Polymer.dom(e.currentTarget).querySelector('#collapse').toggle();
+//      this.$.collapse.toggle();
     },
 
     _balance: function(){
