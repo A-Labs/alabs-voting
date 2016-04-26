@@ -20,6 +20,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../neon-animation/neon-animated-pages.html">
 <link rel="import" href="../neon-animation/neon-animation.html">
 <link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../iron-collapse/iron-collapse.html">
 
 <!--
 An element providing a solution to no problem in particular.
@@ -46,6 +47,11 @@ Example:
      .canvas {
         @apply(--locals-canvas);
       }
+
+     .wide {
+        width:100%;
+      }
+
      .whitespace {
       height: 20px;
      }
@@ -108,8 +114,9 @@ Example:
       on-response="hresponse"
       debounce-duration="300"></iron-ajax>
 
-      <div class="canvas">
+      <div class="wide">
         <locals-button txtcolor="green" on-tap="askEth">Balance: Ξ <span>{{balans}}</span></locals-button>
+
       </div>
 
     <neon-animated-pages
@@ -127,12 +134,14 @@ Example:
             <locals-item class="prop" on-tap="_showdetail" key="{{index}}">{{item.data.subject}}</locals-item>
           </template>
         </div>
+        <iron-collapse id="collapse">??</iron-collapse>
       </div>
       </neon-animatable>
 
       <neon-animatable key="1">
       <div class="canvas">
-        <locals-button on-tap="back">back</locals-button>
+
+      <locals-button icon="back" on-tap="back"></locals-button>
         <alabs-proposal class="props" ipfshash="{{selectedhash}}"></alabs-proposal>
       </div>
       </neon-animatable>
@@ -338,10 +347,9 @@ Example:
     _showdetail: function(e){
       // console.log(this.dataobject[this.selecteditem]);
       this.selectedhash = this.dataobject[e.target.key].data.ipfshash;
-      this.state = 1;
-      console.log('dit is uit _showdetail', e.target.key, 'ANDS THIS IS THE HASH:', this.selectedhash);
-      // this.selecteditem = null;
-
+      // this.state = 1;
+      // console.log('dit is uit _showdetail', e.target.key, 'ANDS THIS IS THE HASH:', this.selectedhash);
+      this.$.collapse.toggle();
     },
 
     _balance: function(){
