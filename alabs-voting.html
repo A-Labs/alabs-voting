@@ -145,14 +145,14 @@ Example:
       <div class="canvas">
 
       <locals-button icon="back" on-tap="back"></locals-button>
-        <alabs-proposal account="{{account}}" class="props" ipfshash="{{selectedhash}}"></alabs-proposal>
+        <alabs-proposal class="props" ipfshash="{{selectedhash}}"></alabs-proposal>
       </div>
       </neon-animatable>
 
       <neon-animatable key="2">
       <div class="canvas">
         <locals-button on-tap="back">back</locals-button>
-        <alabs-proposal edit web3="{{web3}}" on-proposal-added="back"></alabs-proposal>
+        <alabs-proposal edit account="{{account}}" web3="{{web3}}" on-proposal-added="back"></alabs-proposal>
       </div>
       </neon-animatable>
       
