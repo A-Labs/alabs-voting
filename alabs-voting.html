@@ -12,6 +12,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../locals-button/locals-button.html">
 <link rel="import" href="../locals-item/locals-item.html">
+<link rel="import" href="../locals-icon/locals-icon.html">
+
 <link rel="import" href="../locals-style/locals-style.html">
 <link rel="import" href="../iron-pages/iron-pages.html">
 <link rel="import" href="../alabs-proposal/alabs-proposal.html">
@@ -81,14 +83,18 @@ Example:
         max-width: 900px;
       }
 
-
-      .prop {
+      .totalitem {
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+        width: 100%;
         box-sizing: border-box;
         padding: 14px;
         font-size: 32px;
-        border-bottom: 1px dashed var(--locals-grey2); 
+        border-bottom: 1px dashed var(--locals-grey2);
+        cursor: pointer; 
       }
-      .prop:hover {
+
+      .totalitem:hover {
         margin-top: -1px;
         padding-top: 15px;
         padding-left: 18px;
@@ -104,6 +110,20 @@ Example:
 
 
 
+
+      locals-item {
+        @apply(--layout-flex);
+      }
+
+      locals-icon {
+        background-color: var(--locals-grey1);
+        border-radius: 50%;
+        box-sizing: border-box;
+        padding: 10px;
+      }
+
+
+
     </style>
 
     <web3-wallet password="defaultpassword" host="http://109.123.70.141:8545" account="{{account}}" web3="{{web3}}" balance="{{balance}}" keystore="{{keystore}}"></web3-wallet>
@@ -114,10 +134,8 @@ Example:
       on-response="hresponse"
       debounce-duration="300"></iron-ajax>
 
-      <div class="wide">
-        <p>{{account}}</p>
+      <div class="canvas">
         <locals-button txtcolor="green" on-tap="askEth">Balance: Ξ <span>{{balans}}</span></locals-button>
-
       </div>
 
     <neon-animated-pages
@@ -129,12 +147,13 @@ Example:
      <neon-animatable key="0">
       <div class="canvas">
         <div class="props">
-        <locals-button txtcolor="blue" on-tap="createNew">New proposal: Ξ 2</locals-button>
+<!--         <locals-button txtcolor="blue" on-tap="createNew">New proposal: Ξ 2</locals-button> -->
+ 
+        <locals-button icon="plus" txtcolor="blue" on-tap="createNew"></locals-button>
         <div class="whitespace"></div>
           <template is="dom-repeat" items="{{dataobject}}">
-            <div class="bababa" on-tap="_showdetail">
-              <locals-item class="prop" key="{{index}}">{{item.data.subject}}</locals-item>
-              <iron-collapse id="collapse">??</iron-collapse>
+            <div class="totalitem" on-tap="_showdetail">
+              <locals-item key="{{index}}">{{item.data.subject}}</locals-item><locals-icon icon="proposal"></locals-icon>
             </div>
           </template>
         </div>
@@ -143,8 +162,7 @@ Example:
 
       <neon-animatable key="1">
       <div class="canvas">
-
-      <locals-button icon="back" on-tap="back"></locals-button>
+        <locals-button outline="grey2" icon="list" on-tap="back"></locals-button>
         <alabs-proposal class="props" ipfshash="{{selectedhash}}"></alabs-proposal>
       </div>
       </neon-animatable>
@@ -255,8 +273,8 @@ Example:
 
     ready: function() {
       this.state = 0;
-      this.entryAnimation = "slide-from-right-animation";
-      this.exitAnimation = "slide-left-animation";
+      this.entryAnimation = "fade-in-animation";
+      this.exitAnimation = "fade-out-animation";
 
       // `ready` is called after all elements have been configured, but
       // propagates bottom-up. This element's children are ready, but parents
@@ -349,7 +367,7 @@ Example:
     _showdetail: function(e){
       // console.log(this.dataobject[this.selecteditem]);
       this.selectedhash = this.dataobject[e.target.key].data.ipfshash;
-      // this.state = 1;
+      this.state = 1;
       // console.log('dit is uit _showdetail', e.target.key, 'ANDS THIS IS THE HASH:', this.selectedhash);
       Polymer.dom(e.currentTarget).querySelector('#collapse').toggle();
 //      this.$.collapse.toggle();
