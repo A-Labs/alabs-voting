@@ -8,7 +8,6 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../web3-wallet/web3-wallet.html">
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../locals-button/locals-button.html">
 <link rel="import" href="../locals-item/locals-item.html">
@@ -126,8 +125,6 @@ Example:
 
     </style>
 
-    <web3-wallet password="defaultpassword" host="http://109.123.70.141:8545" account="{{account}}" web3="{{web3}}" balance="{{balance}}" keystore="{{keystore}}"></web3-wallet>
-
     <iron-ajax
       id="ajax"
       handle-as="json"
@@ -234,12 +231,6 @@ Example:
         value: 'alabsvoting001'
       },
 
-      web3: {
-        // The web3 object: we bind this so we can interact with it. When it's ready, it fires a function _web3, this sets up the topic (clubid) subscription, so we can get the latest IPFS hash.
-        type: Object,
-        observer: '_web3'
-      },
-
       dataobject: {
         // this is where our app gets it's data!
         type: Array,
@@ -291,16 +282,6 @@ Example:
       // This is a good place to perform any work related to your element's
       // visual state or active behavior (measuring sizes, beginning animations,
       // loading resources, etc).
-    },
-
-    detached: function() {
-      // The analog to `attached`, `detached` fires when the element has been
-      // removed from a document.
-      //
-      // Use this to clean up anything you did in `attached`.
-    },
-
-    _web3: function(){
       var self = this;
       // Here we subscribe to the clubid topic. When the IPFS hash is changed, we get to know it here.
       var dataobject = [];
@@ -314,26 +295,13 @@ Example:
       console.log(dataobject);
       self.dataobject = dataobject;
 
-      //this.dataobject = dataobject;
+    },
 
-        console.log('web3 started');
-
-        // this.identity = this.web3.shh.newIdentity();
-
-        // var filter = this.web3.shh.filter({
-        //   "topics": [this.web3.fromAscii(this.clubid)],
-        // });
-
-        // filter.watch(function(error, result) {
-        //   if (!error)
-        //     console.log("ipfs hash? ", self.web3.toAscii(result.payload), JSON.parse(self.web3.toAscii(result.payload)));
-        //     var result = JSON.parse(self.web3.toAscii(result.payload));
-        //     console.log('hash is ', result.ipfshash);
-        //     self.ipfshash = result.ipfshash; 
-        // });
-
-        //this.whisperpost("hash");
-
+    detached: function() {
+      // The analog to `attached`, `detached` fires when the element has been
+      // removed from a document.
+      //
+      // Use this to clean up anything you did in `attached`.
     },
 
     whisperpost: function(ipfshash) {
