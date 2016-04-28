@@ -150,7 +150,7 @@ Example:
         <div class="whitespace"></div>
           <template is="dom-repeat" items="{{dataobject}}">
             <div class="totalitem" on-tap="_showdetail">
-              <locals-item key="{{index}}">{{item.data.subject}}</locals-item><locals-icon icon="proposal"></locals-icon>
+              <locals-item key="{{index}}">{{item.data.description}}</locals-item><locals-icon icon="proposal"></locals-icon>
             </div>
           </template>
         </div>
@@ -167,7 +167,7 @@ Example:
       <neon-animatable key="2">
       <div class="canvas">
         <locals-button on-tap="back">back</locals-button>
-        <alabs-proposal edit account="{{account}}" web3="{{web3}}" on-proposal-added="back"></alabs-proposal>
+        <alabs-proposal contractaddr="0xffeC3944471F589ad5200e095B4B6032691f1797" edit account="{{account}}" web3="{{web3}}" on-proposal-added="back"></alabs-proposal>
       </div>
       </neon-animatable>
       
@@ -283,6 +283,8 @@ Example:
       // visual state or active behavior (measuring sizes, beginning animations,
       // loading resources, etc).
       var self = this;
+
+      this.$.web3.initWallet();
       // Here we subscribe to the clubid topic. When the IPFS hash is changed, we get to know it here.
       var dataobject = [];
       var fb = new Firebase('https://sponnet.firebaseio.com/alabs/proposals/');
