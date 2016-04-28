@@ -27,7 +27,8 @@
     "alabs-proposal": "https://github.com/A-Labs/alabs-proposal.git",
     "web3-wallet": "^0.0.7",
     "neon-animation": "^1.2.1",
-    "iron-collapse": "^1.0.8"
+    "iron-collapse": "^1.0.8",
+    "pikaday": "^1.4.0"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
