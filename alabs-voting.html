@@ -126,7 +126,7 @@ Example:
 
     </style>
 
-    <web3-wallet password="defaultpassword" host="http://109.123.70.141:8545" account="{{account}}" web3="{{web3}}" balance="{{balance}}" keystore="{{keystore}}"></web3-wallet>
+    <web3-wallet password="defaultpassword" id="web3" host="http://109.123.70.141:8545" account="{{account}}" web3="{{web3}}" balance="{{balance}}" keystore="{{keystore}}"></web3-wallet>
 
     <iron-ajax
       id="ajax"
@@ -170,7 +170,7 @@ Example:
       <neon-animatable key="2">
       <div class="canvas">
         <locals-button on-tap="back">back</locals-button>
-        <alabs-proposal edit account="{{account}}" web3="{{web3}}" on-proposal-added="back"></alabs-proposal>
+        <alabs-proposal contractaddr="0xffeC3944471F589ad5200e095B4B6032691f1797" edit account="{{account}}" web3="{{web3}}" on-proposal-added="back"></alabs-proposal>
       </div>
       </neon-animatable>
       
@@ -302,6 +302,8 @@ Example:
 
     _web3: function(){
       var self = this;
+
+      this.$.web3.initWallet();
       // Here we subscribe to the clubid topic. When the IPFS hash is changed, we get to know it here.
       var dataobject = [];
       var fb = new Firebase('https://sponnet.firebaseio.com/alabs/proposals/');
