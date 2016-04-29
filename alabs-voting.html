@@ -151,7 +151,7 @@ Example:
           <template is="dom-repeat" items="{{dataobject}}">
             <div class="totalitem" on-tap="_showdetail">
               <locals-item key="{{index}}">{{item.data.description}}</locals-item>
-              <span>{{item.data.startdate}}</span>
+              <span>{{nowtime}}</span>
               <span>{{item.data.enddate}}</span>
               <locals-icon icon="proposal"></locals-icon>
             </div>
@@ -239,6 +239,13 @@ Example:
         type: Array,
         observer: '_dataobject'
       },
+
+      nowtime: {
+        type: Number,
+        value: function(){
+          return Math.floor(Date.now() / 1000);
+        }
+      }
 
       balance: {
         type: Number,
