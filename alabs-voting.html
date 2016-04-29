@@ -14,6 +14,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../locals-icon/locals-icon.html">
 
 <link rel="import" href="../locals-style/locals-style.html">
+<link rel="import" href="../locals-progress/locals-progress.html">
 <link rel="import" href="../iron-pages/iron-pages.html">
 <link rel="import" href="../alabs-proposal/alabs-proposal.html">
 <link rel="import" href="../iron-selector/iron-selector.html">
@@ -22,6 +23,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../neon-animation/neon-animation.html">
 <link rel="import" href="../iron-ajax/iron-ajax.html">
 <link rel="import" href="../iron-collapse/iron-collapse.html">
+
 
 <!--
 An element providing a solution to no problem in particular.
@@ -151,10 +153,13 @@ Example:
           <template is="dom-repeat" items="{{dataobject}}">
             <div class="totalitem" on-tap="_showdetail">
               <locals-item key="{{index}}">{{item.data.description}}</locals-item>
-              <span>{{nowtime}}</span>
-              <span>{{item.data.enddate}}</span>
-              <locals-icon icon="proposal"></locals-icon>
-            </div>
+              <locals-progress size="50" start="{{item.data.startdate}}" end="{{item.data.enddate}}" round max="100" fill="lightblue" bg="darkblue"></locals-progress>
+      
+              <!-- <small>{{nowtime}}</small>
+              <small> | </small>
+              <small>{{item.data.enddate}}</small> -->
+<!--               <locals-icon icon="proposal"></locals-icon>
+ -->            </div>
           </template>
         </div>
       </div>

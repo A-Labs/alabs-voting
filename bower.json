@@ -28,7 +28,8 @@
     "web3-wallet": "^0.0.7",
     "neon-animation": "^1.2.1",
     "iron-collapse": "^1.0.8",
-    "pikaday": "^1.4.0"
+    "pikaday": "^1.4.0",
+    "locals-progress": "https://github.com/locals-world/locals-progress.git"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
