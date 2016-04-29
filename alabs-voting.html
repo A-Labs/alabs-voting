@@ -150,7 +150,10 @@ Example:
         <div class="whitespace"></div>
           <template is="dom-repeat" items="{{dataobject}}">
             <div class="totalitem" on-tap="_showdetail">
-              <locals-item key="{{index}}">{{item.data.description}}</locals-item><locals-icon icon="proposal"></locals-icon>
+              <locals-item key="{{index}}">{{item.data.description}}</locals-item>
+              <span>{{item.data.startdate}}</span>
+              <span>{{item.data.enddate}}</span>
+              <locals-icon icon="proposal"></locals-icon>
             </div>
           </template>
         </div>
