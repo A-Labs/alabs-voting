@@ -36,6 +36,7 @@
     "web-component-tester": "*"
   },
   "resolutions": {
-    "moment": "^2.13.0"
+    "moment": "^2.13.0",
+    "web3-wallet": "^0.0.8"
   }
 }
