@@ -271,6 +271,32 @@ Example:
         // this is where our app gets it's data!
         type: Number,
         observer: '_state'
+      },
+
+      keystore: {
+        type: Object,
+        observer: '_keystore'
+      },
+
+      web3: {
+        type: Object,
+        observer: '_web3'
+      },
+
+      /** The contract address where the proposals are stored.
+      * @type {{contractaddr: string}}
+      */
+      contractaddr: {
+        type: String,
+        value: '0xffeC3944471F589ad5200e095B4B6032691f1797'
+      },
+
+      /** The contract application blockchain interface.
+      * @type {{contractabi: object}}
+      */
+      contractabi: {
+        type: Object,
+        value: [ { "constant": true, "inputs": [ { "name": "", "type": "uint256" } ], "name": "proposals", "outputs": [ { "name": "recipient", "type": "address", "value": "0x9f376495fc3678a059db1e823af1e1c92ea8f385" }, { "name": "amount", "type": "uint256", "value": "1" }, { "name": "description", "type": "string", "value": "Schrijf een blogpost" }, { "name": "votingDeadline", "type": "uint256", "value": "1461667765" }, { "name": "executed", "type": "bool", "value": true }, { "name": "proposalPassed", "type": "bool", "value": true }, { "name": "numberOfVotes", "type": "uint256", "value": "1" }, { "name": "proposalHash", "type": "bytes32", "value": "0xbbb6a09ee5888a4878fc378b3bca63f4d92e595b3ef276d9d352719f2d5caa07" } ], "type": "function" }, { "constant": false, "inputs": [ { "name": "proposalNumber", "type": "uint256" }, { "name": "transactionBytecode", "type": "bytes" } ], "name": "executeProposal", "outputs": [ { "name": "result", "type": "int256" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "sharesTokenAddress", "outputs": [ { "name": "", "type": "address", "value": "0x5bdb31fbbc4fed30db973d2d70537676c9d4dcb8" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "numProposals", "outputs": [ { "name": "", "type": "uint256", "value": "6" } ], "type": "function" }, { "constant": false, "inputs": [ { "name": "sharesAddress", "type": "address" }, { "name": "minimumSharesToPassAVote", "type": "uint256" }, { "name": "minutesForDebate", "type": "uint256" } ], "name": "changeVotingRules", "outputs": [], "type": "function" }, { "constant": true, "inputs": [], "name": "debatingPeriodInMinutes", "outputs": [ { "name": "", "type": "uint256", "value": "10" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "minimumQuorum", "outputs": [ { "name": "", "type": "uint256", "value": "1" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [ { "name": "", "type": "address", "value": "0x03f3be66f4dca6e7f5c15bd4950d78f66709ea44" } ], "type": "function" }, { "constant": false, "inputs": [ { "name": "beneficiary", "type": "address" }, { "name": "etherAmount", "type": "uint256" }, { "name": "JobDescription", "type": "string" }, { "name": "transactionBytecode", "type": "bytes" } ], "name": "newProposal", "outputs": [ { "name": "proposalID", "type": "uint256" } ], "type": "function" }, { "constant": false, "inputs": [ { "name": "proposalNumber", "type": "uint256" }, { "name": "supportsProposal", "type": "bool" } ], "name": "vote", "outputs": [ { "name": "voteID", "type": "uint256" } ], "type": "function" }, { "constant": true, "inputs": [ { "name": "proposalNumber", "type": "uint256" }, { "name": "beneficiary", "type": "address" }, { "name": "etherAmount", "type": "uint256" }, { "name": "transactionBytecode", "type": "bytes" } ], "name": "checkProposalCode", "outputs": [ { "name": "codeChecksOut", "type": "bool", "value": false } ], "type": "function" }, { "constant": false, "inputs": [ { "name": "newOwner", "type": "address" } ], "name": "transferOwnership", "outputs": [], "type": "function" }, { "inputs": [ { "name": "sharesAddress", "type": "address", "index": 0, "typeShort": "address", "bits": "", "displayName": "shares Address", "template": "elements_input_address", "value": "0x79FCA913Bb8c6Be97145aFd5A9B70300663AF1d7" }, { "name": "minimumSharesToPassAVote", "type": "uint256", "index": 1, "typeShort": "uint", "bits": "256", "displayName": "minimum Shares To Pass A Vote", "template": "elements_input_uint", "value": "" }, { "name": "minutesForDebate", "type": "uint256", "index": 2, "typeShort": "uint", "bits": "256", "displayName": "minutes For Debate", "template": "elements_input_uint", "value": "5" } ], "type": "constructor" }, { "anonymous": false, "inputs": [ { "indexed": false, "name": "proposalID", "type": "uint256" }, { "indexed": false, "name": "recipient", "type": "address" }, { "indexed": false, "name": "amount", "type": "uint256" }, { "indexed": false, "name": "description", "type": "string" } ], "name": "ProposalAdded", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": false, "name": "proposalID", "type": "uint256" }, { "indexed": false, "name": "position", "type": "bool" }, { "indexed": false, "name": "voter", "type": "address" } ], "name": "Voted", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": false, "name": "proposalID", "type": "uint256" }, { "indexed": false, "name": "result", "type": "int256" }, { "indexed": false, "name": "quorum", "type": "uint256" }, { "indexed": false, "name": "active", "type": "bool" } ], "name": "ProposalTallied", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": false, "name": "minimumQuorum", "type": "uint256" }, { "indexed": false, "name": "debatingPeriodInMinutes", "type": "uint256" }, { "indexed": false, "name": "sharesTokenAddress", "type": "address" } ], "name": "ChangeOfRules", "type": "event" } ]
       }
 
     },
@@ -290,6 +316,16 @@ Example:
       // necessary), or kick off any processes the element wants to perform.
     },
 
+    _keystore: function(){
+      var self = this;
+
+      var keystore = this.keystore;
+      lightwallet.keystore.deriveKeyFromPassword('test', function(err, pwDerivedKey) {
+        console.log('account: ', self.account);
+        console.log(keystore.exportPrivateKey(self.account, pwDerivedKey));
+      });
+    },
+
     attached: function() {
       // `attached` fires once the element and its parents have been inserted
       // into a document.
@@ -297,6 +333,10 @@ Example:
       // This is a good place to perform any work related to your element's
       // visual state or active behavior (measuring sizes, beginning animations,
       // loading resources, etc).
+
+
+
+
       var self = this;
 
       
@@ -321,6 +361,12 @@ Example:
       // Use this to clean up anything you did in `attached`.
     },
 
+    getLocalcoinBalance: function(){
+      // for sponnet!
+      // localcoin contract addr: 0x5BdB31fBBc4feD30dB973D2D70537676c9d4dcb8
+      // function balanceOf(account);
+    },
+
     whisperpost: function(ipfshash) {
       console.log("im posting ", ipfshash);
       return this.web3.shh.post({
@@ -340,6 +386,21 @@ Example:
 
     back: function(){
       this.state = 0;
+    },
+
+    _web3: function(){
+      var self = this;
+      var MyContract = this.web3.eth.contract(this.contractabi);
+      var myContractInstance = MyContract.at(this.contractaddr);
+      var totalprop = myContractInstance.numProposals().toNumber();
+      this.proposals = [];
+      for (var i = totalprop - 1; i >= 0; i--) {
+        //Things[i];
+        var prop = myContractInstance.proposals(i);
+        var cleanprop = { recipient: prop[0], amount: prop[1].toNumber(), description: prop[2], votingdeadline: prop[3].toNumber(), executed: prop[4], passed: prop[5], numberofvotes: prop[6].toNumber(), proposalhash: prop[7] };
+        self.push('proposals', cleanprop);
+      };
+      console.log(this.proposals);
     },
 
     _dataobject: function(){

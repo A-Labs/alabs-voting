@@ -22,9 +22,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <template is="dom-bind" id="app">
 
-    <web3-wallet id="web3wallet" password="test" web3="{{web3}}" host="{{host}}"  balance="{{balance}}" account="{{account}}"></web3-wallet>
+    <web3-wallet id="web3wallet" password="test" keystore="{{keystore}}" web3="{{web3}}" host="{{host}}"  balance="{{balance}}" account="{{account}}"></web3-wallet>
 
-    <alabs-voting clubid="alabsvoting003" web3="{{web3}}" account={{account}}></alabs-voting>
+    <alabs-voting clubid="alabsvoting003" web3="{{web3}}" keystore="{{keystore}}" account={{account}}></alabs-voting>
 
   </template>
 
