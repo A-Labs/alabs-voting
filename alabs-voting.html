@@ -155,7 +155,9 @@ Example:
             <div class="totalitem" on-tap="_showdetail">
               <p>{{item.votingdeadline}}</p><p>{{nowtime}}</p>
               <locals-item key="{{index}}">{{item.description}}</locals-item>
+
               <locals-progress size="40" value="{{item.votingtimeleft}}" round max="{{item.votingdeadline}}" fill="semiblue"></locals-progress>
+
       
               <!-- <small>{{nowtime}}</small>
               <small> | </small>
