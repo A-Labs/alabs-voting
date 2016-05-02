@@ -86,7 +86,7 @@ Example:
 
       .totalitem {
         @apply(--layout-horizontal);
-        @apply(--layout-center);
+        @apply(--layout-start);
         width: 100%;
         box-sizing: border-box;
         padding: 14px;
@@ -154,7 +154,7 @@ Example:
           <template is="dom-repeat" items="{{proposals}}">
             <div class="totalitem" on-tap="_showdetail">
               <locals-item key="{{index}}">{{item.description}}</locals-item>
-              <locals-progress size="40" start="{{item.startdate}}" end="{{item.enddate}}" round max="100" fill="lightblue"></locals-progress>
+              <locals-progress size="40" start="{{item.startdate}}" end="{{item.enddate}}" round max="100" fill="semiblue"></locals-progress>
       
               <!-- <small>{{nowtime}}</small>
               <small> | </small>
@@ -168,7 +168,7 @@ Example:
 
       <neon-animatable key="1">
       <div class="canvas">
-        <locals-button outline="grey2" icon="list" on-tap="back"></locals-button>
+        <locals-button icon="list" on-tap="back"></locals-button>
         <div class="whitespace"></div>
         <alabs-proposal class="props" data="{{selecteditem}}"ipfshash="{{selectedhash}}"></alabs-proposal>
       </div>
@@ -176,7 +176,7 @@ Example:
 
       <neon-animatable key="2">
       <div class="canvas">
-        <locals-button on-tap="back">back</locals-button>
+        <locals-button icon="list" on-tap="back"></locals-button>
         <alabs-proposal contractaddr="0xffeC3944471F589ad5200e095B4B6032691f1797" edit account="{{account}}" web3="{{web3}}" on-proposal-added="back"></alabs-proposal>
       </div>
       </neon-animatable>
