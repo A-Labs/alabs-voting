@@ -153,7 +153,7 @@ Example:
           <template is="dom-repeat" items="{{dataobject}}">
             <div class="totalitem" on-tap="_showdetail">
               <locals-item key="{{index}}">{{item.data.description}}</locals-item>
-              <locals-progress size="50" start="{{item.data.startdate}}" end="{{item.data.enddate}}" round max="100" fill="darkblue" bg="lightblue"></locals-progress>
+              <locals-progress size="40" start="{{item.data.startdate}}" end="{{item.data.enddate}}" round max="100" fill="lightblue"></locals-progress>
       
               <!-- <small>{{nowtime}}</small>
               <small> | </small>
@@ -168,6 +168,7 @@ Example:
       <neon-animatable key="1">
       <div class="canvas">
         <locals-button outline="grey2" icon="list" on-tap="back"></locals-button>
+        <div class="whitespace"></div>
         <alabs-proposal class="props" ipfshash="{{selectedhash}}"></alabs-proposal>
       </div>
       </neon-animatable>
@@ -425,7 +426,7 @@ Example:
       this.selectedhash = this.dataobject[e.target.key].data.ipfshash;
       this.state = 1;
       // console.log('dit is uit _showdetail', e.target.key, 'ANDS THIS IS THE HASH:', this.selectedhash);
-      Polymer.dom(e.currentTarget).querySelector('#collapse').toggle();
+      // Polymer.dom(e.currentTarget).querySelector('#collapse').toggle();
 //      this.$.collapse.toggle();
     },
 
