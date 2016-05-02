@@ -153,8 +153,9 @@ Example:
 
           <template is="dom-repeat" items="{{proposals}}">
             <div class="totalitem" on-tap="_showdetail">
+              <p>{{item.votingdeadline}}</p><p>{{nowtime}}</p>
               <locals-item key="{{index}}">{{item.description}}</locals-item>
-              <locals-progress size="40" start="{{item.startdate}}" end="{{item.enddate}}" round max="100" fill="semiblue"></locals-progress>
+              <locals-progress size="40" value="{{item.votingtimeleft}}" round max="{{item.votingdeadline}}" fill="semiblue"></locals-progress>
       
               <!-- <small>{{nowtime}}</small>
               <small> | </small>
@@ -409,7 +410,8 @@ Example:
           executed: prop[4],
           passed: prop[5],
           numberofvotes: prop[6].toNumber(),
-          proposalhash: prop[7]
+          proposalhash: prop[7],
+          votingtimeleft: prop[3].toNumber() - self.nowtime
         };
         self.push('proposals', cleanprop);
       };
