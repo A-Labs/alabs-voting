@@ -280,7 +280,8 @@ Example:
 
       web3: {
         type: Object,
-        observer: '_web3'
+        observer: '_web3',
+        notify: true
       },
 
       /** The contract address where the proposals are stored.
@@ -367,18 +368,18 @@ Example:
       // function balanceOf(account);
     },
 
-    whisperpost: function(ipfshash) {
-      console.log("im posting ", ipfshash);
-      return this.web3.shh.post({
-        "from": this.identity,
-        "topics": [this.web3.fromAscii(this.clubid)],
-        "payload": this.web3.fromAscii(JSON.stringify({
-          ipfshash: ipfshash
-        })),
-        "ttl": 1000,
-        "priority": 1000
-      });
-    },
+    // whisperpost: function(ipfshash) {
+    //   console.log("im posting ", ipfshash);
+    //   return this.web3.shh.post({
+    //     "from": this.identity,
+    //     "topics": [this.web3.fromAscii(this.clubid)],
+    //     "payload": this.web3.fromAscii(JSON.stringify({
+    //       ipfshash: ipfshash
+    //     })),
+    //     "ttl": 1000,
+    //     "priority": 1000
+    //   });
+    // },
 
     createNew: function(){
       this.state = 2;
@@ -388,7 +389,7 @@ Example:
       this.state = 0;
     },
 
-    _web3: function(){
+    _web3: function() {
       var self = this;
       var MyContract = this.web3.eth.contract(this.contractabi);
       var myContractInstance = MyContract.at(this.contractaddr);
@@ -397,7 +398,16 @@ Example:
       for (var i = totalprop - 1; i >= 0; i--) {
         //Things[i];
         var prop = myContractInstance.proposals(i);
-        var cleanprop = { recipient: prop[0], amount: prop[1].toNumber(), description: prop[2], votingdeadline: prop[3].toNumber(), executed: prop[4], passed: prop[5], numberofvotes: prop[6].toNumber(), proposalhash: prop[7] };
+        var cleanprop = {
+          recipient: prop[0],
+          amount: prop[1].toNumber(),
+          description: prop[2],
+          votingdeadline: prop[3].toNumber(),
+          executed: prop[4],
+          passed: prop[5],
+          numberofvotes: prop[6].toNumber(),
+          proposalhash: prop[7]
+        };
         self.push('proposals', cleanprop);
       };
       console.log(this.proposals);
