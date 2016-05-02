@@ -150,10 +150,11 @@ Example:
  
         <locals-button icon="plus" txtcolor="blue" on-tap="createNew"></locals-button>
         <div class="whitespace"></div>
-          <template is="dom-repeat" items="{{dataobject}}">
+
+          <template is="dom-repeat" items="{{proposals}}">
             <div class="totalitem" on-tap="_showdetail">
-              <locals-item key="{{index}}">{{item.data.description}}</locals-item>
-              <locals-progress size="50" start="{{item.data.startdate}}" end="{{item.data.enddate}}" round max="100" fill="darkblue" bg="lightblue"></locals-progress>
+              <locals-item key="{{index}}">{{item.description}}</locals-item>
+              <locals-progress size="50" start="{{item.startdate}}" end="{{item.enddate}}" round max="100" fill="darkblue" bg="lightblue"></locals-progress>
       
               <!-- <small>{{nowtime}}</small>
               <small> | </small>
@@ -168,7 +169,7 @@ Example:
       <neon-animatable key="1">
       <div class="canvas">
         <locals-button outline="grey2" icon="list" on-tap="back"></locals-button>
-        <alabs-proposal class="props" ipfshash="{{selectedhash}}"></alabs-proposal>
+        <alabs-proposal class="props" data="{{selecteditem}}"ipfshash="{{selectedhash}}"></alabs-proposal>
       </div>
       </neon-animatable>
 
@@ -399,6 +400,7 @@ Example:
         //Things[i];
         var prop = myContractInstance.proposals(i);
         var cleanprop = {
+          index: i,
           recipient: prop[0],
           amount: prop[1].toNumber(),
           description: prop[2],
@@ -422,7 +424,7 @@ Example:
 
     _showdetail: function(e){
       // console.log(this.dataobject[this.selecteditem]);
-      this.selectedhash = this.dataobject[e.target.key].data.ipfshash;
+      this.selecteditem = this.proposals[e.target.key];
       this.state = 1;
       // console.log('dit is uit _showdetail', e.target.key, 'ANDS THIS IS THE HASH:', this.selectedhash);
       Polymer.dom(e.currentTarget).querySelector('#collapse').toggle();
