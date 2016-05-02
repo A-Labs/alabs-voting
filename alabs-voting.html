@@ -414,6 +414,9 @@ Example:
         self.push('proposals', cleanprop);
       };
       console.log(this.proposals);
+      var web3wallet = document.getElementById('web3wallet');
+      this.balance = web3wallet.updateBalance();
+      console.log(this.balance);
     },
 
     _dataobject: function(){
