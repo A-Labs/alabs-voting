@@ -12,7 +12,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../locals-button/locals-button.html">
 <link rel="import" href="../locals-item/locals-item.html">
 <link rel="import" href="../locals-icon/locals-icon.html">
-
 <link rel="import" href="../locals-style/locals-style.html">
 <link rel="import" href="../locals-progress/locals-progress.html">
 <link rel="import" href="../iron-pages/iron-pages.html">
@@ -23,8 +22,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../neon-animation/neon-animation.html">
 <link rel="import" href="../iron-ajax/iron-ajax.html">
 <link rel="import" href="../iron-collapse/iron-collapse.html">
-
-
 <!--
 An element providing a solution to no problem in particular.
 
@@ -109,9 +106,6 @@ Example:
         opacity: 1;
       }
 
-
-
-
       locals-item {
         @apply(--layout-flex);
       }
@@ -123,8 +117,6 @@ Example:
         padding: 10px;
       }
 
-
-
     </style>
 
     <iron-ajax
@@ -134,7 +126,7 @@ Example:
       debounce-duration="300"></iron-ajax>
 
       <div class="canvas">
-        <locals-button txtcolor="green" on-tap="askEth">Balance: Ξ <span>{{balans}}</span></locals-button>
+      <locals-button txtcolor="green" on-tap="askEth">Balance: Ξ <span>{{balans}}</span> / Δ <span>{{localcoinbalance}}</span></locals-button>
       </div>
 
     <neon-animated-pages
@@ -143,28 +135,20 @@ Example:
       entry-animation="{{entryAnimation}}"
       exit-animation="{{exitAnimation}}">
 
-     <neon-animatable key="0">
+      <neon-animatable key="0">
       <div class="canvas">
         <div class="props">
-<!--         <locals-button txtcolor="blue" on-tap="createNew">New proposal: Ξ 2</locals-button> -->
- 
+
         <locals-button icon="plus" txtcolor="blue" on-tap="createNew"></locals-button>
         <div class="whitespace"></div>
 
-          <template is="dom-repeat" items="{{proposals}}">
-            <div class="totalitem" on-tap="_showdetail">
-              <p>{{item.votingdeadline}}</p><p>{{nowtime}}</p>
-              <locals-item key="{{index}}">{{item.description}}</locals-item>
+        <template is="dom-repeat" items="{{proposals}}">
+          <div class="totalitem" on-tap="_showdetail">
+            <locals-item key="{{index}}">{{item.description}}</locals-item>
+            <locals-progress size="40" start="{{item.startdate}}" round end="{{item.votingdeadline}}" bg="semiblue" fill="grey2"></locals-progress>
+          </div>
+        </template>
 
-              <locals-progress size="40" value="{{item.votingtimeleft}}" round max="{{item.votingdeadline}}" fill="semiblue"></locals-progress>
-
-      
-              <!-- <small>{{nowtime}}</small>
-              <small> | </small>
-              <small>{{item.data.enddate}}</small> -->
-<!--               <locals-icon icon="proposal"></locals-icon>
- -->            </div>
-          </template>
         </div>
       </div>
       </neon-animatable>
@@ -185,42 +169,7 @@ Example:
       </neon-animatable>
       
     </neon-animated-pages>
-<!-- 
 
-<iron-pages selected="{{state}}">
-      <section>
-      <div class="canvas">
-        <div class="props">
-        <locals-button txtcolor="blue" on-tap="createNew">new proposal</locals-button>
-        <div class="whitespace"></div>
-        <iron-selector selected="{{selecteditem}}" on-iron-select="_showdetail">
-          <template is="dom-repeat" items="{{dataobject}}">
-            <locals-item class="prop">{{item.data.subject}}</locals-item>
-          </template>
-        </iron-selector>
-        </div>
-      </div>
-      </section>
-
-      <section class="thisone">
-      <div class="canvas">
-        <locals-button on-tap="back">back</locals-button>
-        <alabs-proposal ipfshash="{{selectedhash}}"></alabs-proposal>
-      </div>
-      </section>
-
-      <section>
-      <div class="canvas">
-        <locals-button on-tap="back">back</locals-button>
-        <alabs-proposal edit on-proposal-added="back"></alabs-proposal>
-      </div>
-      </section>
-      <section>
-        <locals-button on-tap="giveeth">Give me Ξ5</locals-button>
-        <div>You have Ξ<span>{{balance}}</span></div>
-      </section>
-</iron-pages>
- -->    
   </template>
 
 </dom-module>
@@ -303,6 +252,11 @@ Example:
       contractabi: {
         type: Object,
         value: [ { "constant": true, "inputs": [ { "name": "", "type": "uint256" } ], "name": "proposals", "outputs": [ { "name": "recipient", "type": "address", "value": "0x9f376495fc3678a059db1e823af1e1c92ea8f385" }, { "name": "amount", "type": "uint256", "value": "1" }, { "name": "description", "type": "string", "value": "Schrijf een blogpost" }, { "name": "votingDeadline", "type": "uint256", "value": "1461667765" }, { "name": "executed", "type": "bool", "value": true }, { "name": "proposalPassed", "type": "bool", "value": true }, { "name": "numberOfVotes", "type": "uint256", "value": "1" }, { "name": "proposalHash", "type": "bytes32", "value": "0xbbb6a09ee5888a4878fc378b3bca63f4d92e595b3ef276d9d352719f2d5caa07" } ], "type": "function" }, { "constant": false, "inputs": [ { "name": "proposalNumber", "type": "uint256" }, { "name": "transactionBytecode", "type": "bytes" } ], "name": "executeProposal", "outputs": [ { "name": "result", "type": "int256" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "sharesTokenAddress", "outputs": [ { "name": "", "type": "address", "value": "0x5bdb31fbbc4fed30db973d2d70537676c9d4dcb8" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "numProposals", "outputs": [ { "name": "", "type": "uint256", "value": "6" } ], "type": "function" }, { "constant": false, "inputs": [ { "name": "sharesAddress", "type": "address" }, { "name": "minimumSharesToPassAVote", "type": "uint256" }, { "name": "minutesForDebate", "type": "uint256" } ], "name": "changeVotingRules", "outputs": [], "type": "function" }, { "constant": true, "inputs": [], "name": "debatingPeriodInMinutes", "outputs": [ { "name": "", "type": "uint256", "value": "10" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "minimumQuorum", "outputs": [ { "name": "", "type": "uint256", "value": "1" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [ { "name": "", "type": "address", "value": "0x03f3be66f4dca6e7f5c15bd4950d78f66709ea44" } ], "type": "function" }, { "constant": false, "inputs": [ { "name": "beneficiary", "type": "address" }, { "name": "etherAmount", "type": "uint256" }, { "name": "JobDescription", "type": "string" }, { "name": "transactionBytecode", "type": "bytes" } ], "name": "newProposal", "outputs": [ { "name": "proposalID", "type": "uint256" } ], "type": "function" }, { "constant": false, "inputs": [ { "name": "proposalNumber", "type": "uint256" }, { "name": "supportsProposal", "type": "bool" } ], "name": "vote", "outputs": [ { "name": "voteID", "type": "uint256" } ], "type": "function" }, { "constant": true, "inputs": [ { "name": "proposalNumber", "type": "uint256" }, { "name": "beneficiary", "type": "address" }, { "name": "etherAmount", "type": "uint256" }, { "name": "transactionBytecode", "type": "bytes" } ], "name": "checkProposalCode", "outputs": [ { "name": "codeChecksOut", "type": "bool", "value": false } ], "type": "function" }, { "constant": false, "inputs": [ { "name": "newOwner", "type": "address" } ], "name": "transferOwnership", "outputs": [], "type": "function" }, { "inputs": [ { "name": "sharesAddress", "type": "address", "index": 0, "typeShort": "address", "bits": "", "displayName": "shares Address", "template": "elements_input_address", "value": "0x79FCA913Bb8c6Be97145aFd5A9B70300663AF1d7" }, { "name": "minimumSharesToPassAVote", "type": "uint256", "index": 1, "typeShort": "uint", "bits": "256", "displayName": "minimum Shares To Pass A Vote", "template": "elements_input_uint", "value": "" }, { "name": "minutesForDebate", "type": "uint256", "index": 2, "typeShort": "uint", "bits": "256", "displayName": "minutes For Debate", "template": "elements_input_uint", "value": "5" } ], "type": "constructor" }, { "anonymous": false, "inputs": [ { "indexed": false, "name": "proposalID", "type": "uint256" }, { "indexed": false, "name": "recipient", "type": "address" }, { "indexed": false, "name": "amount", "type": "uint256" }, { "indexed": false, "name": "description", "type": "string" } ], "name": "ProposalAdded", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": false, "name": "proposalID", "type": "uint256" }, { "indexed": false, "name": "position", "type": "bool" }, { "indexed": false, "name": "voter", "type": "address" } ], "name": "Voted", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": false, "name": "proposalID", "type": "uint256" }, { "indexed": false, "name": "result", "type": "int256" }, { "indexed": false, "name": "quorum", "type": "uint256" }, { "indexed": false, "name": "active", "type": "bool" } ], "name": "ProposalTallied", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": false, "name": "minimumQuorum", "type": "uint256" }, { "indexed": false, "name": "debatingPeriodInMinutes", "type": "uint256" }, { "indexed": false, "name": "sharesTokenAddress", "type": "address" } ], "name": "ChangeOfRules", "type": "event" } ]
+      },
+
+      coincontractabi: {
+        type: Object,
+        value: [ { "constant": false, "inputs": [ { "name": "newSellPrice", "type": "uint256" }, { "name": "newBuyPrice", "type": "uint256" } ], "name": "setPrices", "outputs": [], "type": "function" }, { "constant": true, "inputs": [], "name": "name", "outputs": [ { "name": "", "type": "string", "value": "LocalCoin0.1" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "totalSupply", "outputs": [ { "name": "", "type": "uint256", "value": "100000000" } ], "type": "function" }, { "constant": false, "inputs": [ { "name": "_from", "type": "address" }, { "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" } ], "name": "transferFrom", "outputs": [ { "name": "success", "type": "bool" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "decimals", "outputs": [ { "name": "", "type": "uint8", "value": "2" } ], "type": "function" }, { "constant": false, "inputs": [ { "name": "_spender", "type": "address" }, { "name": "_value", "type": "uint256" } ], "name": "approveAndCall", "outputs": [ { "name": "success", "type": "bool" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "sellPrice", "outputs": [ { "name": "", "type": "uint256", "value": "500000000000000000" } ], "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "address" } ], "name": "balanceOf", "outputs": [ { "name": "", "type": "uint256", "value": "0" } ], "type": "function" }, { "constant": false, "inputs": [ { "name": "target", "type": "address" }, { "name": "mintedAmount", "type": "uint256" } ], "name": "mintToken", "outputs": [], "type": "function" }, { "constant": true, "inputs": [], "name": "buyPrice", "outputs": [ { "name": "", "type": "uint256", "value": "500000000000000000" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [ { "name": "", "type": "address", "value": "0x03f3be66f4dca6e7f5c15bd4950d78f66709ea44" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "symbol", "outputs": [ { "name": "", "type": "string", "value": "Δ" } ], "type": "function" }, { "constant": false, "inputs": [], "name": "buy", "outputs": [], "type": "function" }, { "constant": false, "inputs": [ { "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" } ], "name": "transfer", "outputs": [], "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "address" } ], "name": "frozenAccount", "outputs": [ { "name": "", "type": "bool", "value": false } ], "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "address" }, { "name": "", "type": "address" } ], "name": "spentAllowance", "outputs": [ { "name": "", "type": "uint256", "value": "0" } ], "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "address" }, { "name": "", "type": "address" } ], "name": "allowance", "outputs": [ { "name": "", "type": "uint256", "value": "0" } ], "type": "function" }, { "constant": false, "inputs": [ { "name": "amount", "type": "uint256" } ], "name": "sell", "outputs": [], "type": "function" }, { "constant": false, "inputs": [ { "name": "target", "type": "address" }, { "name": "freeze", "type": "bool" } ], "name": "freezeAccount", "outputs": [], "type": "function" }, { "constant": false, "inputs": [ { "name": "newOwner", "type": "address" } ], "name": "transferOwnership", "outputs": [], "type": "function" }, { "inputs": [ { "name": "initialSupply", "type": "uint256", "index": 0, "typeShort": "uint", "bits": "256", "displayName": "initial Supply", "template": "elements_input_uint", "value": "100000000" }, { "name": "tokenName", "type": "string", "index": 1, "typeShort": "string", "bits": "", "displayName": "token Name", "template": "elements_input_string", "value": "LocalCoin0.1" }, { "name": "decimalUnits", "type": "uint8", "index": 2, "typeShort": "uint", "bits": "8", "displayName": "decimal Units", "template": "elements_input_uint", "value": "2" }, { "name": "tokenSymbol", "type": "string", "index": 3, "typeShort": "string", "bits": "", "displayName": "token Symbol", "template": "elements_input_string", "value": "Δ" }, { "name": "centralMinter", "type": "address", "index": 4, "typeShort": "address", "bits": "", "displayName": "central Minter", "template": "elements_input_address", "value": "0x03F3be66f4DCA6e7f5C15BD4950d78F66709ea44" } ], "type": "constructor" }, { "anonymous": false, "inputs": [ { "indexed": true, "name": "from", "type": "address" }, { "indexed": true, "name": "to", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" } ], "name": "Transfer", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": false, "name": "target", "type": "address" }, { "indexed": false, "name": "frozen", "type": "bool" } ], "name": "FrozenFunds", "type": "event" } ]
       }
 
     },
@@ -340,11 +294,7 @@ Example:
       // visual state or active behavior (measuring sizes, beginning animations,
       // loading resources, etc).
 
-
-
-
       var self = this;
-
       
       // Here we subscribe to the clubid topic. When the IPFS hash is changed, we get to know it here.
       var dataobject = [];
@@ -368,9 +318,12 @@ Example:
     },
 
     getLocalcoinBalance: function(){
-      // for sponnet!
-      // localcoin contract addr: 0x5BdB31fBBc4feD30dB973D2D70537676c9d4dcb8
-      // function balanceOf(account);
+      var MyCoinContract = this.web3.eth.contract(this.coincontractabi);
+      var myCoinContractInstance = MyCoinContract.at('0x5BdB31fBBc4feD30dB973D2D70537676c9d4dcb8');
+      var account = this.fixaddress(this.account);
+      var coinbalance = myCoinContractInstance.balanceOf(account).toNumber();
+      //console.log(this.account, ' current localcoin balance: ', coinbalance);
+      this.localcoinbalance = coinbalance/100;
     },
 
     // whisperpost: function(ipfshash) {
@@ -399,6 +352,8 @@ Example:
       var MyContract = this.web3.eth.contract(this.contractabi);
       var myContractInstance = MyContract.at(this.contractaddr);
       var totalprop = myContractInstance.numProposals().toNumber();
+      var debatingperiod = myContractInstance.debatingPeriodInMinutes().toNumber();
+
       this.proposals = [];
       for (var i = totalprop - 1; i >= 0; i--) {
         //Things[i];
@@ -413,7 +368,7 @@ Example:
           passed: prop[5],
           numberofvotes: prop[6].toNumber(),
           proposalhash: prop[7],
-          votingtimeleft: prop[3].toNumber() - self.nowtime
+          startdate: prop[3].toNumber() - (debatingperiod * 60)
         };
         self.push('proposals', cleanprop);
       };
@@ -421,6 +376,7 @@ Example:
       var web3wallet = document.getElementById('web3wallet');
       this.balance = web3wallet.updateBalance();
       console.log(this.balance);
+      this.getLocalcoinBalance();
     },
 
     _dataobject: function(){
@@ -465,9 +421,19 @@ Example:
       return newarray;
     },
 
-
     _state: function(){
       console.log("State is=", this.state);
+    },
+
+    fixaddress: function(address) {
+      function strStartsWith(str, prefix) {
+        return str.indexOf(prefix) === 0;
+      }
+
+      if (!strStartsWith(address, '0x')) {
+        return ('0x' + address);
+      }
+      return address;
     }
 
 
