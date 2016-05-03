@@ -157,7 +157,7 @@ Example:
       <div class="canvas">
         <locals-button icon="list" on-tap="back"></locals-button>
         <div class="whitespace"></div>
-        <alabs-proposal class="props" data="{{selecteditem}}"ipfshash="{{selectedhash}}"></alabs-proposal>
+        <alabs-proposal class="props" web3="{{web3}}" account="{{account}}" data="{{selecteditem}}" ipfshash="{{selectedhash}}"></alabs-proposal>
       </div>
       </neon-animatable>
 
@@ -319,7 +319,7 @@ Example:
 
     getLocalcoinBalance: function(){
       var MyCoinContract = this.web3.eth.contract(this.coincontractabi);
-      var myCoinContractInstance = MyCoinContract.at('0x5BdB31fBBc4feD30dB973D2D70537676c9d4dcb8');
+      var myCoinContractInstance = MyCoinContract.at('0x53F6E368f4a99c5b717EfF80c7f8175E0e45C0cC');
       var account = this.fixaddress(this.account);
       var coinbalance = myCoinContractInstance.balanceOf(account).toNumber();
       //console.log(this.account, ' current localcoin balance: ', coinbalance);
