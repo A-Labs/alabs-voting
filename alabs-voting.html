@@ -109,13 +109,38 @@ Example:
       locals-item {
         @apply(--layout-flex);
       }
+      
+      .nonactive {
+        color: var(--locals-grey7);
+      }
 
-      locals-icon {
+
+      .notpassed {
+        margin: 10px;
+        box-sizing: border-box;
         background-color: var(--locals-grey1);
         border-radius: 50%;
-        box-sizing: border-box;
-        padding: 10px;
+        padding: 12px;
       }
+
+      .passed {
+        margin: 10px;
+        box-sizing: border-box;
+        border: 2px solid var(--locals-grey3);
+        background-color: transparent;
+        border-radius: 50%;
+        padding: 8px;
+      }
+
+
+
+      .execute {
+        margin: 17px 5px 10px 5px;
+        color: var(--locals-green);
+        @apply(--opensans-reg);
+        font-size: 14px;
+      }
+
 
     </style>
 
@@ -144,25 +169,31 @@ Example:
 
         <template is="dom-repeat" items="{{proposals}}">
           <div class="totalitem" on-tap="_showdetail">
+
+            <template is="dom-if" if="{{item.votingactive}}">
             <locals-item key="{{index}}">{{item.description}}</locals-item>
+            </template>
+
 
             <template is="dom-if" if="{{!item.votingactive}}">
+
+            <locals-item class="nonactive" key="{{index}}">{{item.description}}</locals-item>
               <template is="dom-if" if="{{item.passed}}">
-              passed!
+                <template is="dom-if" if="{{item.executed}}">
+                  <locals-icon icon="v" iconcolor="green" class="passed" small></locals-icon>
+                </template>
+                <template is="dom-if" if="{{!item.executed}}">
+                  <p class="execute">Execute!</p>
+                  <locals-icon icon="v" iconcolor="grey4" class="passed" small></locals-icon>
+                </template>
               </template>
               <template is="dom-if" if="{{!item.passed}}">
-              not passed!
-              </template>
-              <template is="dom-if" if="{{item.executed}}">
-              executed!
-              </template>
-              <template is="dom-if" if="{{!item.executed}}">
-              not executed!
+                <locals-icon icon="dash" iconcolor="grey4" class="notpassed" small></locals-icon>
               </template>
             </template>
-            
-
-            <locals-progress size="40" start="{{item.startdate}}" round end="{{item.votingdeadline}}" bg="semiblue" fill="grey2"></locals-progress>
+            <template is="dom-if" if="{{item.votingactive}}">
+              <locals-progress size="40" start="{{item.startdate}}" round end="{{item.votingdeadline}}" bg="semiblue" fill="grey1"></locals-progress>
+            </template>
           </div>
         </template>
 
