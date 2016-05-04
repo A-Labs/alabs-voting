@@ -145,6 +145,23 @@ Example:
         <template is="dom-repeat" items="{{proposals}}">
           <div class="totalitem" on-tap="_showdetail">
             <locals-item key="{{index}}">{{item.description}}</locals-item>
+
+            <template is="dom-if" if="{{!item.votingactive}}">
+              <template is="dom-if" if="{{item.passed}}">
+              passed!
+              </template>
+              <template is="dom-if" if="{{!item.passed}}">
+              not passed!
+              </template>
+              <template is="dom-if" if="{{item.executed}}">
+              executed!
+              </template>
+              <template is="dom-if" if="{{!item.executed}}">
+              not executed!
+              </template>
+            </template>
+            
+
             <locals-progress size="40" start="{{item.startdate}}" round end="{{item.votingdeadline}}" bg="semiblue" fill="grey2"></locals-progress>
           </div>
         </template>
@@ -358,12 +375,19 @@ Example:
       for (var i = totalprop - 1; i >= 0; i--) {
         //Things[i];
         var prop = myContractInstance.proposals(i);
+        var voteactive;
+        if(prop[3].toNumber()>Math.floor(Date.now() / 1000)){
+            voteactive = true;
+
+          } else { voteactive = false;
+        };
         var cleanprop = {
           index: i,
           recipient: prop[0],
           amount: prop[1].toNumber(),
           description: prop[2],
           votingdeadline: prop[3].toNumber(),
+          votingactive: voteactive,
           executed: prop[4],
           passed: prop[5],
           numberofvotes: prop[6].toNumber(),
