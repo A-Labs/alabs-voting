@@ -147,14 +147,14 @@ Example:
             <locals-item key="{{index}}">{{item.description}}</locals-item>
 
             <template is="dom-if" if="{{!item.votingactive}}">
-              <template is="dom-if" if="{{item.passed}}">
+              <template is="dom-if" if="{{item.executed}}">
+              executed!
+                <template is="dom-if" if="{{item.passed}}">
               passed!
               </template>
               <template is="dom-if" if="{{!item.passed}}">
               not passed!
               </template>
-              <template is="dom-if" if="{{item.executed}}">
-              executed!
               </template>
               <template is="dom-if" if="{{!item.executed}}">
               not executed!
@@ -340,7 +340,8 @@ Example:
       var account = this.fixaddress(this.account);
       var coinbalance = myCoinContractInstance.balanceOf(account).toNumber();
       //console.log(this.account, ' current localcoin balance: ', coinbalance);
-      this.localcoinbalance = coinbalance/100;
+      //this.localcoinbalance = coinbalance/100;
+      this.localcoinbalance = coinbalance / 100;
     },
 
     // whisperpost: function(ipfshash) {
@@ -377,9 +378,9 @@ Example:
         var prop = myContractInstance.proposals(i);
         var voteactive;
         if(prop[3].toNumber()>Math.floor(Date.now() / 1000)){
-            voteactive = true;
-
-          } else { voteactive = false;
+          voteactive = true;
+        } else { 
+          voteactive = false;
         };
         var cleanprop = {
           index: i,
@@ -392,13 +393,14 @@ Example:
           passed: prop[5],
           numberofvotes: prop[6].toNumber(),
           proposalhash: prop[7],
-          startdate: prop[3].toNumber() - (debatingperiod * 60)
+          startdate: prop[3].toNumber() - debatingperiod
         };
         self.push('proposals', cleanprop);
       };
       console.log(this.proposals);
       var web3wallet = document.getElementById('web3wallet');
       this.balance = web3wallet.updateBalance();
+      this.balance = Math.round(this.balance*100)/100;
       console.log(this.balance);
       this.getLocalcoinBalance();
     },
@@ -420,8 +422,8 @@ Example:
     },
 
     _balance: function(){
-        this.balans = this.balance / 1e18;
-      },
+        this.balans = Math.round(this.balance / 1e16)/100;
+    },
 
     askEth: function(){
       //console.log('send me 1 testnet ether DAWG!');
