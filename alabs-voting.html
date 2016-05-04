@@ -403,11 +403,12 @@ Example:
       //console.log('send me 1 testnet ether DAWG!');
       this.$.ajax.url = 'http://faucet.ma.cx:3000/donate/' + this.account;
       this.$.ajax.generateRequest();
+     
     },
 
     hresponse: function(argument) {
       //console.log('iets?');
-      //console.log(argument);
+      console.log(argument.detail.response);
     },
 
     object2array: function(input){
