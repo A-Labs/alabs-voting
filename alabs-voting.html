@@ -204,7 +204,7 @@ Example:
       <div class="canvas">
         <locals-button icon="list" on-tap="back"></locals-button>
         <div class="whitespace"></div>
-        <alabs-proposal class="props" web3="{{web3}}" account="{{account}}" data="{{selecteditem}}" ipfshash="{{selectedhash}}"></alabs-proposal>
+        <alabs-proposal id="proposal" class="props" web3="{{web3}}" account="{{account}}" data="{{selecteditem}}" ipfshash="{{selectedhash}}"></alabs-proposal>
       </div>
       </neon-animatable>
 
@@ -392,6 +392,7 @@ Example:
     },
 
     back: function(){
+      this.$.proposal.pageselected = 0;
       this.state = 0;
     },
 
