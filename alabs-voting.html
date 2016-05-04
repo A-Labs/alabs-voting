@@ -126,7 +126,7 @@ Example:
       .passed {
         margin: 10px;
         box-sizing: border-box;
-        border: 2px solid var(--locals-grey3);
+        border: 2px solid var(--locals-grey2);
         background-color: transparent;
         border-radius: 50%;
         padding: 8px;
@@ -178,16 +178,16 @@ Example:
             <template is="dom-if" if="{{!item.votingactive}}">
             <locals-item class="nonactive" key="{{index}}">{{item.description}}</locals-item>
               <template is="dom-if" if="{{item.passed}}">
-                <template is="dom-if" if="{{item.executed}}">
-                  <locals-icon icon="v" iconcolor="green" class="passed" small></locals-icon>
-                </template>
+<!--                 <template is="dom-if" if="{{item.executed}}">
+ -->                  <locals-icon icon="v" iconcolor="green" class="passed" small></locals-icon>
+<!--                 </template>
                 <template is="dom-if" if="{{!item.executed}}">
                   <p class="execute">Execute!</p>
                   <locals-icon icon="v" iconcolor="grey4" class="passed" small></locals-icon>
-                </template>
+                </template> -->
               </template>
               <template is="dom-if" if="{{!item.passed}}">
-                <locals-icon icon="dash" iconcolor="grey4" class="notpassed" small></locals-icon>
+                <locals-icon icon="slash" iconcolor="grey3" class="passed" small></locals-icon>
               </template>
             </template>
             <template is="dom-if" if="{{item.votingactive}}">
