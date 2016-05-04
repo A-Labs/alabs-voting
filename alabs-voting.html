@@ -424,7 +424,7 @@ Example:
           passed: prop[5],
           numberofvotes: prop[6].toNumber(),
           proposalhash: prop[7],
-          startdate: prop[3].toNumber() - debatingperiod
+          startdate: prop[3].toNumber() - debatingperiod * 60
         };
         self.push('proposals', cleanprop);
       };
