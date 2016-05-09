@@ -237,7 +237,7 @@ Example:
       <neon-animatable key="2">
       <div class="canvas">
         <locals-button icon="list" on-tap="back"></locals-button>
-        <alabs-proposal contractaddr="0xffeC3944471F589ad5200e095B4B6032691f1797" edit account="{{account}}" web3="{{web3}}" on-proposal-added="back"></alabs-proposal>
+        <alabs-proposal contractaddr="{{contractaddr}}" edit account="{{account}}" web3="{{web3}}" on-proposal-added="back"></alabs-proposal>
       </div>
       </neon-animatable>
       
@@ -316,7 +316,7 @@ Example:
       */
       contractaddr: {
         type: String,
-        value: '0xffeC3944471F589ad5200e095B4B6032691f1797'
+        value: '0xA7B92A7b501F532ac39CbA524891e303707e3f21'
       },
 
       /** The contract application blockchain interface.
