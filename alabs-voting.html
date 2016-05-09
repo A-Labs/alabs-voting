@@ -120,35 +120,18 @@ Example:
       .notpassed {
         margin: 10px;
         box-sizing: border-box;
-        border: 2px solid var(--locals-grey4);
-/*        background-color: var(--locals-grey2);*/
         border-radius: 50%;
         padding: 6px;
       }
 
-/*      .notpass {
-        color: red;
-      }
-*/
-      .passed {
+
+    .passed {
         margin: 10px;
         box-sizing: border-box;
-        border: 2px solid var(--locals-green);
         background-color: transparent;
         border-radius: 50%;
         padding: 6px;
       }
-
-/*      .pass {
-        width: 100%;     
-        @apply(--layout-horizontal);
-        @apply(--layout-start);
-      }
-
-      .pass:hover {
-                background-color: var(--locals-green);
-
-      }*/
 
       .execute {
         margin: 17px 5px 10px 5px;
@@ -187,11 +170,13 @@ Example:
 
         <iron-selector selected="{{selectedindex}}" attr-for-selected="key" on-iron-select="_showdetail">
           <template is="dom-repeat" items="{{proposals}}">
-          <div class="totalitem" key="{{index}}">
+          <div key="{{index}}">
 
             <template is="dom-if" if="{{item.votingactive}}">
+            <div class="totalitem">
             <locals-item>{{item.description}}</locals-item>
-            <locals-progress time size="40" start="{{item.startdate}}" round end="{{item.votingdeadline}}" bg="semiblue" fill="grey1"></locals-progress>
+            <locals-progress time size="32" start="{{item.startdate}}" round end="{{item.votingdeadline}}" bg="semiblue" fill="grey1"></locals-progress>
+            </div>
             </template>
 
 
@@ -199,20 +184,26 @@ Example:
             
             <template is="dom-if" if="{{item.executed}}">
               <template is="dom-if" if="{{item.passed}}">
+              <div class="totalitem pass">
                 <locals-item class="nonactive pass" key="{{index}}">{{item.description}}</locals-item>
                 <locals-icon icon="v" iconcolor="green" class="passed" small>
                 </locals-icon>
+              </div>
               </template>
               <template is="dom-if" if="{{!item.passed}}">
+              <div class="totalitem">
                 <locals-item class="nonactive notpass" key="{{index}}">{{item.description}}</locals-item>
-                <locals-icon icon="slash" iconcolor="grey4" class="notpassed" small></locals-icon>
+                <locals-icon icon="slash" iconcolor="grey5" class="notpassed" small></locals-icon>
+              </div>
               </template>
             </template>
             <template is="dom-if" if="{{!item.executed}}">
+            <div class="totalitem">
               <locals-item class="nonactive toexecute" key="{{index}}">{{item.description}}</locals-item>
               <div>
                 <p class="execute">Execute!</p>
               </div>
+            </div>
             <!-- <locals-button small txtcolor="blue">Execute!</locals-button> -->
             </template>
           
