@@ -184,15 +184,16 @@ Example:
         <locals-button icon="plus" txtcolor="blue" on-tap="createNew"></locals-button>
         <div class="whitespace"></div>
 
+        <p on-tap="reverseSorting">FILTER/SORT</p>
+
         <iron-selector selected="{{selectedindex}}" attr-for-selected="key" on-iron-select="_showdetail">
-          <template is="dom-repeat" items="{{proposals}}">
+          <template is="dom-repeat" items="{{proposals}}" id="proplist">
           <div class="totalitem" key="{{index}}">
 
             <template is="dom-if" if="{{item.votingactive}}">
             <locals-item>{{item.description}}</locals-item>
             <locals-progress time size="40" start="{{item.startdate}}" round end="{{item.votingdeadline}}" bg="semiblue" fill="grey1"></locals-progress>
             </template>
-
 
           <template is="dom-if" if="{{!item.votingactive}}">
             
@@ -220,8 +221,6 @@ Example:
           </div>
         </template>
         </iron-selector>
-
-        
 
         </div>
       </div>
@@ -384,6 +383,13 @@ Example:
 
     },
 
+    reverseSorting: function(){
+      var prop = this.proposals;
+      prop.reverse();
+      this.proposals = prop;
+      this.$.proplist.render();
+    },
+
     detached: function() {
       // The analog to `attached`, `detached` fires when the element has been
       // removed from a document.
@@ -451,12 +457,12 @@ Example:
       this.getLocalcoinBalance();
     },
 
-    _dataobject: function(){
-      var self = this;
-      //this.items = this.object2array(this.dataobject);
-      //var dataobject = this.dataobject;
-      console.log(this.dataobject);
-    },
+    // _dataobject: function(){
+    //   var self = this;
+    //   //this.items = this.object2array(this.dataobject);
+    //   //var dataobject = this.dataobject;
+    //   console.log(this.dataobject);
+    // },
 
     _showdetail: function(e){
       // console.log(this.dataobject[this.selecteditem]);
