@@ -233,6 +233,7 @@ Example:
       </div>
       </neon-animatable>
 
+      <!-- detailview -->
       <neon-animatable key="1">
       <div class="canvas">
         <locals-button icon="list" on-tap="back"></locals-button>
@@ -241,10 +242,11 @@ Example:
       </div>
       </neon-animatable>
 
+      <!-- nieuwe aanmaken -->
       <neon-animatable key="2">
       <div class="canvas">
         <locals-button icon="list" on-tap="back"></locals-button>
-        <alabs-proposal contractaddr="{{contractaddr}}" edit account="{{account}}" web3="{{web3}}" on-proposal-added="back"></alabs-proposal>
+        <alabs-proposal id="newproposal" contractaddr="{{contractaddr}}" edit account="{{account}}" web3="{{web3}}" on-proposal-added="back"></alabs-proposal>
       </div>
       </neon-animatable>
       
@@ -435,10 +437,11 @@ Example:
     },
 
     back: function(){
-//      this.$.proposal.pageselected = 0;
       this.$.proposal.toInitstate();
+      this.$.newproposal.toInitstate();
       this.state = 0;
       this.selectedindex = null;
+      this.selecteditem = null;
     },
 
     _web3: function() {
