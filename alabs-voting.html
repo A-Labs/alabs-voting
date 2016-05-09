@@ -17,7 +17,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../iron-pages/iron-pages.html">
 <link rel="import" href="../alabs-proposal/alabs-proposal.html">
 <link rel="import" href="../iron-selector/iron-selector.html">
-<link rel="import" href="../firebase-element/firebase.html">
 <link rel="import" href="../neon-animation/neon-animated-pages.html">
 <link rel="import" href="../neon-animation/neon-animation.html">
 <link rel="import" href="../iron-ajax/iron-ajax.html">
@@ -168,8 +167,11 @@ Example:
         <locals-button icon="plus" txtcolor="blue" on-tap="createNew"></locals-button>
         <div class="whitespace"></div>
 
+        <p on-tap="reverseSorting">FILTER/SORT</p>
+
         <iron-selector selected="{{selectedindex}}" attr-for-selected="key" on-iron-select="_showdetail">
-          <template is="dom-repeat" items="{{proposals}}">
+
+          <template is="dom-repeat" items="{{proposals}}" id="proplist">
           <div key="{{index}}">
 
             <template is="dom-if" if="{{item.votingactive}}">
@@ -178,7 +180,6 @@ Example:
             <locals-progress time size="32" start="{{item.startdate}}" round end="{{item.votingdeadline}}" bg="semiblue" fill="grey1"></locals-progress>
             </div>
             </template>
-
 
           <template is="dom-if" if="{{!item.votingactive}}">
             
@@ -213,8 +214,6 @@ Example:
         </template>
         </iron-selector>
 
-        
-
         </div>
       </div>
       </neon-animatable>
@@ -230,7 +229,7 @@ Example:
       <neon-animatable key="2">
       <div class="canvas">
         <locals-button icon="list" on-tap="back"></locals-button>
-        <alabs-proposal contractaddr="0xffeC3944471F589ad5200e095B4B6032691f1797" edit account="{{account}}" web3="{{web3}}" on-proposal-added="back"></alabs-proposal>
+        <alabs-proposal contractaddr="{{contractaddr}}" edit account="{{account}}" web3="{{web3}}" on-proposal-added="back"></alabs-proposal>
       </div>
       </neon-animatable>
       
@@ -309,7 +308,7 @@ Example:
       */
       contractaddr: {
         type: String,
-        value: '0xffeC3944471F589ad5200e095B4B6032691f1797'
+        value: '0xA7B92A7b501F532ac39CbA524891e303707e3f21'
       },
 
       /** The contract application blockchain interface.
@@ -360,20 +359,27 @@ Example:
       // visual state or active behavior (measuring sizes, beginning animations,
       // loading resources, etc).
 
-      var self = this;
+      // var self = this;
       
-      // Here we subscribe to the clubid topic. When the IPFS hash is changed, we get to know it here.
-      var dataobject = [];
-      var fb = new Firebase('https://sponnet.firebaseio.com/alabs/proposals/');
-      fb.on('value', function(snap){
-        //console.log('ello fb ',snap.val());
-        self.dataobject = self.object2array(snap.val());
-        self.dataobject.reverse();
-      });
+      // // Here we subscribe to the clubid topic. When the IPFS hash is changed, we get to know it here.
+      // var dataobject = [];
+      // var fb = new Firebase('https://sponnet.firebaseio.com/alabs/proposals/');
+      // fb.on('value', function(snap){
+      //   //console.log('ello fb ',snap.val());
+      //   self.dataobject = self.object2array(snap.val());
+      //   self.dataobject.reverse();
+      // });
 
-      console.log(dataobject);
-      self.dataobject = dataobject;
+      // console.log(dataobject);
+      // self.dataobject = dataobject;
 
+    },
+
+    reverseSorting: function(){
+      var prop = this.proposals;
+      prop.reverse();
+      this.proposals = prop;
+      this.$.proplist.render();
     },
 
     detached: function() {
@@ -393,19 +399,6 @@ Example:
       this.localcoinbalance = coinbalance / 100;
     },
 
-    // whisperpost: function(ipfshash) {
-    //   console.log("im posting ", ipfshash);
-    //   return this.web3.shh.post({
-    //     "from": this.identity,
-    //     "topics": [this.web3.fromAscii(this.clubid)],
-    //     "payload": this.web3.fromAscii(JSON.stringify({
-    //       ipfshash: ipfshash
-    //     })),
-    //     "ttl": 1000,
-    //     "priority": 1000
-    //   });
-    // },
-
     createNew: function(){
       this.state = 2;
     },
@@ -413,6 +406,7 @@ Example:
     back: function(){
       this.$.proposal.pageselected = 0;
       this.state = 0;
+      this.selectedindex = null;
     },
 
     _web3: function() {
@@ -455,12 +449,12 @@ Example:
       this.getLocalcoinBalance();
     },
 
-    _dataobject: function(){
-      var self = this;
-      //this.items = this.object2array(this.dataobject);
-      //var dataobject = this.dataobject;
-      console.log(this.dataobject);
-    },
+    // _dataobject: function(){
+    //   var self = this;
+    //   //this.items = this.object2array(this.dataobject);
+    //   //var dataobject = this.dataobject;
+    //   console.log(this.dataobject);
+    // },
 
     _showdetail: function(e){
       // console.log(this.dataobject[this.selecteditem]);
@@ -482,21 +476,21 @@ Example:
      
     },
 
-    hresponse: function(argument) {
-      //console.log('iets?');
-      console.log(argument.detail.response);
-    },
+    // hresponse: function(argument) {
+    //   //console.log('iets?');
+    //   console.log(argument.detail.response);
+    // },
 
-    object2array: function(input){
-        var newarray = [];
-        var p = input;
-        for (var key in p) {
-          if (p.hasOwnProperty(key)) {
-            newarray.push({data: p[key], key: key});
-        }
-      };
-      return newarray;
-    },
+    // object2array: function(input){
+    //     var newarray = [];
+    //     var p = input;
+    //     for (var key in p) {
+    //       if (p.hasOwnProperty(key)) {
+    //         newarray.push({data: p[key], key: key});
+    //     }
+    //   };
+    //   return newarray;
+    // },
 
     _state: function(){
       console.log("State is=", this.state);

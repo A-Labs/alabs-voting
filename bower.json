@@ -22,7 +22,6 @@
     "paper-input": "^1.1.11",
     "locals-item": "https://github.com/locals-world/locals-item.git",
     "locals-button": "https://github.com/locals-world/locals-button.git",
-    "firebase-element": "GoogleWebComponents/firebase-element#^1.0.12",
     "iron-pages": "^1.0.7",
     "alabs-proposal": "https://github.com/A-Labs/alabs-proposal.git",
     "web3-wallet": "^0.0.8",
