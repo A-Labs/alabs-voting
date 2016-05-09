@@ -14,6 +14,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../locals-icon/locals-icon.html">
 <link rel="import" href="../locals-style/locals-style.html">
 <link rel="import" href="../locals-progress/locals-progress.html">
+<link rel="import" href="../locals-dropdown/locals-dropdown.html">
 <link rel="import" href="../iron-pages/iron-pages.html">
 <link rel="import" href="../alabs-proposal/alabs-proposal.html">
 <link rel="import" href="../iron-selector/iron-selector.html">
@@ -175,6 +176,13 @@ Example:
         <div class="whitespace"></div>
 
         <p on-tap="reverseSorting">FILTER/SORT</p>
+        <locals-dropdown attrselected="filter" selected="all items">
+        <locals-item filter="all items">all items</locals-item>
+        <locals-item filter="to execute">to execute</locals-item>
+        <locals-item filter="passed">passed</locals-item>
+        <locals-item filter="not passed">not passed</locals-item>
+        </locals-dropdown>
+
 
         <iron-selector selected="{{selectedindex}}" attr-for-selected="key" on-iron-select="_showdetail">
 

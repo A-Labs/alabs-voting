@@ -29,7 +29,8 @@
     "iron-collapse": "^1.0.8",
     "pikaday": "^1.4.0",
     "locals-progress": "https://github.com/locals-world/locals-progress.git",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "locals-dropdown": "https://github.com/locals-world/locals-dropdown.git"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
