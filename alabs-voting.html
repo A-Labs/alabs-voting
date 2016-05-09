@@ -152,6 +152,11 @@ Example:
       on-response="hresponse"
       debounce-duration="300"></iron-ajax>
 
+
+<locals-contractlistener
+      web3="{{web3}}"
+      contractaddress="{{contractaddr}}" on-filter-match="_contractlistener"></locals-contractlistener>
+
       <div class="canvas">
       <locals-button txtcolor="green" on-tap="askEth">Balance: Ξ <span>{{balans}}</span> / Δ <span>{{localcoinbalance}}</span></locals-button>
       </div>
@@ -335,6 +340,7 @@ Example:
       this.entryAnimation = "fade-in-animation";
       this.exitAnimation = "fade-out-animation";
 
+
       // `ready` is called after all elements have been configured, but
       // propagates bottom-up. This element's children are ready, but parents
       // are not.
@@ -383,6 +389,10 @@ Example:
       _.sortBy(prop, 'startdate');
       this.proposals = prop;
       this.$.proplist.render();
+    },
+
+    _contractlistener: function(e){
+      console.log('_contractlistener: ', e.detail);
     },
 
     detached: function() {
