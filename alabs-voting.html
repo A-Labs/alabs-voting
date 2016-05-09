@@ -102,13 +102,15 @@ Example:
         border-bottom: 1px solid var(--locals-grey1); 
       }
 
+      locals-item {
+        @apply(--layout-flex);
+      }
+
+
       .thisone {
         opacity: 1;
       }
 
-      locals-item {
-        @apply(--layout-flex);
-      }
       
       .nonactive {
         color: var(--locals-grey7);
@@ -118,21 +120,35 @@ Example:
       .notpassed {
         margin: 10px;
         box-sizing: border-box;
-        background-color: var(--locals-grey1);
+        border: 2px solid var(--locals-grey4);
+/*        background-color: var(--locals-grey2);*/
         border-radius: 50%;
-        padding: 12px;
+        padding: 6px;
       }
 
+/*      .notpass {
+        color: red;
+      }
+*/
       .passed {
         margin: 10px;
         box-sizing: border-box;
-        border: 2px solid var(--locals-grey2);
+        border: 2px solid var(--locals-green);
         background-color: transparent;
         border-radius: 50%;
-        padding: 8px;
+        padding: 6px;
       }
 
+/*      .pass {
+        width: 100%;     
+        @apply(--layout-horizontal);
+        @apply(--layout-start);
+      }
 
+      .pass:hover {
+                background-color: var(--locals-green);
+
+      }*/
 
       .execute {
         margin: 17px 5px 10px 5px;
@@ -140,6 +156,8 @@ Example:
         @apply(--opensans-semibold);
         font-size: 12px;
       }
+
+
 
 
     </style>
@@ -170,37 +188,34 @@ Example:
         <template is="dom-repeat" items="{{proposals}}">
           <div class="totalitem" on-tap="_showdetail">
 
-            <template is="dom-if" if="{{item.votingactive}}">
+          <template is="dom-if" if="{{item.votingactive}}">
             <locals-item key="{{index}}">{{item.description}}</locals-item>
-            </template>
+            <locals-progress time size="40" start="{{item.startdate}}" round end="{{item.votingdeadline}}" bg="semiblue" fill="grey1"></locals-progress>
+          </template>
 
-
-            <template is="dom-if" if="{{!item.votingactive}}">
-            <locals-item class="nonactive" key="{{index}}">{{item.description}}</locals-item>
+          <template is="dom-if" if="{{!item.votingactive}}">
             
             <template is="dom-if" if="{{item.executed}}">
-
               <template is="dom-if" if="{{item.passed}}">
+                <locals-item class="nonactive pass" key="{{index}}">{{item.description}}</locals-item>
                 <locals-icon icon="v" iconcolor="green" class="passed" small>
                 </locals-icon>
-
               </template>
               <template is="dom-if" if="{{!item.passed}}">
-                <locals-icon icon="slash" iconcolor="grey3" class="passed" small></locals-icon>
+                <locals-item class="nonactive notpass" key="{{index}}">{{item.description}}</locals-item>
+                <locals-icon icon="slash" iconcolor="grey4" class="notpassed" small></locals-icon>
               </template>
+            </template>
+            <template is="dom-if" if="{{!item.executed}}">
+              <locals-item class="nonactive toexecute" key="{{index}}">{{item.description}}</locals-item>
+              <div>
+                <p class="execute">Execute!</p>
+              </div>
+            <!-- <locals-button small txtcolor="blue">Execute!</locals-button> -->
+            </template>
+          
+          </template>
 
-            </template>
-                <template is="dom-if" if="{{!item.executed}}">
-                <div>
-                  <p class="execute">Execute!</p>
-                  </div>
-                  <!-- <locals-button small txtcolor="blue">Execute!</locals-button> -->
-                </template>
-
-            </template>
-            <template is="dom-if" if="{{item.votingactive}}">
-              <locals-progress time size="40" start="{{item.startdate}}" round end="{{item.votingdeadline}}" bg="semiblue" fill="grey1"></locals-progress>
-            </template>
           </div>
         </template>
 
