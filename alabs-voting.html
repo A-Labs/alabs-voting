@@ -167,11 +167,12 @@ Example:
         <locals-button icon="plus" txtcolor="blue" on-tap="createNew"></locals-button>
         <div class="whitespace"></div>
 
-        <template is="dom-repeat" items="{{proposals}}">
-          <div class="totalitem" on-tap="_showdetail">
+        <iron-selector selected="{{selectedindex}}" attr-for-selected="key" on-iron-select="_showdetail">
+          <template is="dom-repeat" items="{{proposals}}">
+          <div class="totalitem" key="{{index}}">
 
             <template is="dom-if" if="{{item.votingactive}}">
-            <locals-item key="{{index}}">{{item.description}}</locals-item>
+            <locals-item>{{item.description}}</locals-item>
             </template>
 
 
@@ -203,6 +204,9 @@ Example:
             </template>
           </div>
         </template>
+        </iron-selector>
+
+        
 
         </div>
       </div>
@@ -453,7 +457,7 @@ Example:
 
     _showdetail: function(e){
       // console.log(this.dataobject[this.selecteditem]);
-      this.selecteditem = this.proposals[e.target.key];
+      this.selecteditem = this.proposals[this.selectedindex];
       this.state = 1;
       // console.log('dit is uit _showdetail', e.target.key, 'ANDS THIS IS THE HASH:', this.selectedhash);
       // Polymer.dom(e.currentTarget).querySelector('#collapse').toggle();
