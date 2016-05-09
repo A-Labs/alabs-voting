@@ -392,7 +392,8 @@ Example:
     },
 
     _contractlistener: function(e){
-      console.log('_contractlistener: ', e.detail);
+      console.log('_contractlistener: ', e.detail.result);
+      this._web3();
     },
 
     detached: function() {
@@ -400,6 +401,16 @@ Example:
       // removed from a document.
       //
       // Use this to clean up anything you did in `attached`.
+
+
+      /*
+        - Vote in localstorage zodat we template if kunnen doen (vote buttons)
+        - Blogpost schrijven (sponnet)
+        - Filter / sorting
+        - Iets deployen op bitballoon om te testen
+        - Title, description etc. als IPGFS Hash toevoegen in proposal
+
+      */
     },
 
     getLocalcoinBalance: function(){
