@@ -136,9 +136,9 @@ Example:
 
       .execute {
         margin: 17px 5px 10px 5px;
-        color: var(--locals-green);
-        @apply(--opensans-reg);
-        font-size: 14px;
+        color: var(--locals-blue);
+        @apply(--opensans-semibold);
+        font-size: 12px;
       }
 
 
@@ -177,21 +177,29 @@ Example:
 
             <template is="dom-if" if="{{!item.votingactive}}">
             <locals-item class="nonactive" key="{{index}}">{{item.description}}</locals-item>
+            
+            <template is="dom-if" if="{{item.executed}}">
+
               <template is="dom-if" if="{{item.passed}}">
-<!--                 <template is="dom-if" if="{{item.executed}}">
- -->                  <locals-icon icon="v" iconcolor="green" class="passed" small></locals-icon>
-<!--                 </template>
-                <template is="dom-if" if="{{!item.executed}}">
-                  <p class="execute">Execute!</p>
-                  <locals-icon icon="v" iconcolor="grey4" class="passed" small></locals-icon>
-                </template> -->
+                <locals-icon icon="v" iconcolor="green" class="passed" small>
+                </locals-icon>
+
               </template>
               <template is="dom-if" if="{{!item.passed}}">
                 <locals-icon icon="slash" iconcolor="grey3" class="passed" small></locals-icon>
               </template>
+
+            </template>
+                <template is="dom-if" if="{{!item.executed}}">
+                <div>
+                  <p class="execute">Execute!</p>
+                  </div>
+                  <!-- <locals-button small txtcolor="blue">Execute!</locals-button> -->
+                </template>
+
             </template>
             <template is="dom-if" if="{{item.votingactive}}">
-              <locals-progress size="40" start="{{item.startdate}}" round end="{{item.votingdeadline}}" bg="semiblue" fill="grey1"></locals-progress>
+              <locals-progress time size="40" start="{{item.startdate}}" round end="{{item.votingdeadline}}" bg="semiblue" fill="grey1"></locals-progress>
             </template>
           </div>
         </template>
