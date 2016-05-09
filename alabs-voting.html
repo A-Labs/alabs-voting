@@ -393,7 +393,7 @@ Example:
 
     _contractlistener: function(e){
       console.log('_contractlistener: ', e.detail.result);
-      this._web3();
+      //this._web3();
     },
 
     detached: function() {
@@ -427,7 +427,8 @@ Example:
     },
 
     back: function(){
-      this.$.proposal.pageselected = 0;
+//      this.$.proposal.pageselected = 0;
+      this.$.proposal.toInitstate();
       this.state = 0;
       this.selectedindex = null;
     },
