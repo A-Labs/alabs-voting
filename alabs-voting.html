@@ -403,8 +403,8 @@ Example:
     },
 
     _contractlistener: function(e){
-      console.log('_contractlistener: ', e.detail.result);
-      //this._web3();
+      // A new transaction occured on the voting contract. Refresh view.
+      this._web3();
     },
 
     detached: function() {
