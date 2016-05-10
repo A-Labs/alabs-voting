@@ -108,6 +108,8 @@ Example:
         @apply(--layout-flex);
       }
 
+      .
+
 
       .thisone {
         opacity: 1;
@@ -170,20 +172,19 @@ Example:
 
       <neon-animatable key="0">
       <div class="canvas">
-        <div class="props">
-
+        <div class="layout horizontal">
         <locals-button icon="plus" txtcolor="blue" on-tap="createNew"></locals-button>
-        <div class="whitespace"></div>
-
-        <p on-tap="reverseSorting">FILTER/SORT</p>
-        <locals-dropdown attrselected="filter" selected="all items">
-        <locals-item filter="all items">all items</locals-item>
-        <locals-item filter="to execute">to execute</locals-item>
-        <locals-item filter="passed">passed</locals-item>
-        <locals-item filter="not passed">not passed</locals-item>
+<!--         <div class="whitespace"></div>
+ -->
+        <locals-dropdown attrselected="filter" selecteditem="all proposals">
+        <locals-item filter="all proposals">all proposals</locals-item>
+        <locals-item filter="toexecute">proposals to execute</locals-item>
+        <locals-item filter="passed">proposals passed</locals-item>
+        <locals-item filter="not passed">proposals not passed</locals-item>
         </locals-dropdown>
+        </div>
 
-
+        <div class="props">
         <iron-selector selected="{{selectedindex}}" attr-for-selected="key" on-iron-select="_showdetail">
 
           <template is="dom-repeat" items="{{proposals}}" id="proplist">
