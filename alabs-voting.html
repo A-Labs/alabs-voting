@@ -296,6 +296,11 @@ Example:
         observer: '_balance'
       },
 
+      localcoinbalance: {
+        type: Number,
+        observer: '_localcoinbalance'
+      },
+
       coincontract: {
         type: String
       },
@@ -439,6 +444,12 @@ Example:
       this.localcoinbalance = coinbalance / 100;
     },
 
+    _localcoinbalance: function(){
+      if(this.localcoinbalance<1){
+        this.askLocalcoin();
+      }
+    },
+
     createNew: function(){
       this.state = 2;
     },
@@ -472,20 +483,13 @@ Example:
           voteactive = false;
         };
 
-
-        try {
-          JSON.parse(prop[2]);
-          _description = JSON.parse(prop[2]);
-        } catch (e) {
-          console.log('JSON is false');
-          _description = prop[2];
-        };
+        //console.log(JSON.stringify(prop.Vote()));
 
         var cleanprop = {
           index: i,
           recipient: prop[0],
           amount: prop[1].toNumber(),
-          description: _description,
+          description: JSON.parse(prop[2]),
           votingdeadline: prop[3].toNumber(),
           votingactive: voteactive,
           executed: prop[4],
@@ -523,13 +527,22 @@ Example:
 
     _balance: function(){
         this.balans = Math.round(this.balance / 1e16)/100;
-        if(this.balance>0.1){};
+        if(this.balance<0.1){
+          this.askEth();
+        };
     },
 
     askEth: function(){
       //console.log('send me 1 testnet ether DAWG!');
       this.$.ajax.url = 'http://faucet.ma.cx:3000/donate/' + this.account;
       this.$.ajax.generateRequest();
+     
+    },
+
+    askLocalcoin: function(){
+      //console.log('send me 1 testnet ether DAWG!');
+      //this.$.ajax.url = 'http://faucet.ma.cx:3000/donate/' + this.account;
+      //this.$.ajax.generateRequest();
      
     },
 
