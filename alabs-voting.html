@@ -342,13 +342,6 @@ Example:
       this.entryAnimation = "fade-in-animation";
       this.exitAnimation = "fade-out-animation";
 
-
-      // `ready` is called after all elements have been configured, but
-      // propagates bottom-up. This element's children are ready, but parents
-      // are not.
-      //
-      // This is the point where you should make modifications to the DOM (when
-      // necessary), or kick off any processes the element wants to perform.
     },
 
     _keystore: function(){
@@ -362,26 +355,6 @@ Example:
     },
 
     attached: function() {
-      // `attached` fires once the element and its parents have been inserted
-      // into a document.
-      //
-      // This is a good place to perform any work related to your element's
-      // visual state or active behavior (measuring sizes, beginning animations,
-      // loading resources, etc).
-
-      // var self = this;
-      
-      // // Here we subscribe to the clubid topic. When the IPFS hash is changed, we get to know it here.
-      // var dataobject = [];
-      // var fb = new Firebase('https://sponnet.firebaseio.com/alabs/proposals/');
-      // fb.on('value', function(snap){
-      //   //console.log('ello fb ',snap.val());
-      //   self.dataobject = self.object2array(snap.val());
-      //   self.dataobject.reverse();
-      // });
-
-      // console.log(dataobject);
-      // self.dataobject = dataobject;
 
     },
 
@@ -399,19 +372,7 @@ Example:
     },
 
     detached: function() {
-      // The analog to `attached`, `detached` fires when the element has been
-      // removed from a document.
-      //
-      // Use this to clean up anything you did in `attached`.
-
-
-      /*
-        - Blogpost schrijven (sponnet)
-        - Filter / sorting
-        - Iets deployen op bitballoon om te testen
-        - Title, description etc. als IPFS Hash toevoegen in proposal
-
-      */
+    
     },
 
     getLocalcoinBalance: function(){
@@ -468,29 +429,19 @@ Example:
         };
         self.push('proposals', cleanprop);
       };
-      console.log(this.proposals);
+      //console.log(this.proposals);
       var web3wallet = document.getElementById('web3wallet');
       this.balance = web3wallet.updateBalance();
       this.balance = Math.round(this.balance*100)/100;
-      console.log(this.balance);
+      //console.log(this.balance);
       this.getLocalcoinBalance();
     },
-
-    // _dataobject: function(){
-    //   var self = this;
-    //   //this.items = this.object2array(this.dataobject);
-    //   //var dataobject = this.dataobject;
-    //   console.log(this.dataobject);
-    // },
 
     _showdetail: function(e){
       // console.log(this.dataobject[this.selecteditem]);
       console.log(this.proposals[this.selectedindex]);
       this.selecteditem = this.proposals[this.selectedindex];
       this.state = 1;
-      // console.log('dit is uit _showdetail', e.target.key, 'ANDS THIS IS THE HASH:', this.selectedhash);
-      // Polymer.dom(e.currentTarget).querySelector('#collapse').toggle();
-//      this.$.collapse.toggle();
     },
 
     _balance: function(){
@@ -503,22 +454,6 @@ Example:
       this.$.ajax.generateRequest();
      
     },
-
-    // hresponse: function(argument) {
-    //   //console.log('iets?');
-    //   console.log(argument.detail.response);
-    // },
-
-    // object2array: function(input){
-    //     var newarray = [];
-    //     var p = input;
-    //     for (var key in p) {
-    //       if (p.hasOwnProperty(key)) {
-    //         newarray.push({data: p[key], key: key});
-    //     }
-    //   };
-    //   return newarray;
-    // },
 
     _state: function(){
       console.log("State is=", this.state);
