@@ -30,7 +30,8 @@
     "pikaday": "^1.4.0",
     "locals-progress": "https://github.com/locals-world/locals-progress.git",
     "underscore": "^1.8.3",
-    "locals-dropdown": "https://github.com/locals-world/locals-dropdown.git"
+    "locals-dropdown": "https://github.com/locals-world/locals-dropdown.git",
+    "alabs-datetime": "https://github.com/A-Labs/alabs-datetime.git"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
