@@ -164,7 +164,7 @@ Example:
       contractaddress="{{contractaddr}}" on-filter-match="_contractlistener"></locals-contractlistener>
 
     <div class="canvas">
-      <locals-button txtcolor="green" on-tap="askEth">Balance: Ξ <span>{{balans}}</span> / Δ <span>{{localcoinbalance}}</span></locals-button>
+      <locals-button txtcolor="green">Balance: Ξ <span>{{balans}}</span> / Δ <span>{{localcoinbalance}}</span></locals-button>
     </div>
 
     <neon-animated-pages
@@ -314,6 +314,10 @@ Example:
         observer: '_balance'
       },
 
+      coincontract: {
+        type: String
+      },
+
       entryAnimation: {
         type: String,
         value:"slide-from-right-animation"
@@ -346,7 +350,7 @@ Example:
       */
       contractaddr: {
         type: String,
-        value: '0xA39De4D5c20C7732761D4dd7779301ef7Ce0392e'
+        value: '0x30e0Ad44Df3cB121Cc26820bBBfa9371faa64dCE'
       },
 
       /** The contract application blockchain interface.
@@ -445,7 +449,7 @@ Example:
 
     getLocalcoinBalance: function(){
       var MyCoinContract = this.web3.eth.contract(this.coincontractabi);
-      var myCoinContractInstance = MyCoinContract.at('0x53F6E368f4a99c5b717EfF80c7f8175E0e45C0cC');
+      var myCoinContractInstance = MyCoinContract.at(this.coincontract);
       var account = this.fixaddress(this.account);
       var coinbalance = myCoinContractInstance.balanceOf(account).toNumber();
       //console.log(this.account, ' current localcoin balance: ', coinbalance);
@@ -469,11 +473,14 @@ Example:
       var self = this;
       var MyContract = this.web3.eth.contract(this.contractabi);
       var myContractInstance = MyContract.at(this.contractaddr);
+      //var totalprop = 1;
       var totalprop = myContractInstance.numProposals().toNumber();
+      this.coincontract = myContractInstance.sharesTokenAddress();
       var debatingperiod = myContractInstance.debatingPeriodInMinutes().toNumber();
 
       this.proposals = [];
       for (var i = totalprop - 1; i >= 0; i--) {
+        var _description = null;
         //Things[i];
         var prop = myContractInstance.proposals(i);
         var voteactive;
@@ -482,11 +489,21 @@ Example:
         } else { 
           voteactive = false;
         };
+
+
+        try {
+          JSON.parse(prop[2]);
+          _description = JSON.parse(prop[2]);
+        } catch (e) {
+          console.log('JSON is false');
+          _description = prop[2];
+        };
+
         var cleanprop = {
           index: i,
           recipient: prop[0],
           amount: prop[1].toNumber(),
-          description: JSON.parse(prop[2]),
+          description: _description,
           votingdeadline: prop[3].toNumber(),
           votingactive: voteactive,
           executed: prop[4],
@@ -524,6 +541,7 @@ Example:
 
     _balance: function(){
         this.balans = Math.round(this.balance / 1e16)/100;
+        if(this.balance>0.1){};
     },
 
     askEth: function(){
