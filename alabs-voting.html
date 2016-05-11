@@ -9,6 +9,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-material/paper-material.html">
+
 <link rel="import" href="../locals-button/locals-button.html">
 <link rel="import" href="../locals-item/locals-item.html">
 <link rel="import" href="../locals-icon/locals-icon.html">
@@ -57,7 +59,8 @@ Example:
       height: 20px;
      }
       h1 {
-       @apply(--locals-font-h1);
+       /*@apply(--locals-font-h1);*/
+       font-size: 48px;
       }
       h2 {
        @apply(--locals-font-h2);
@@ -141,8 +144,9 @@ Example:
         font-size: 12px;
       }
 
-
-
+      paper-material {
+        padding: 10px;
+      }
 
     </style>
 
@@ -152,94 +156,101 @@ Example:
       on-response="hresponse"
       debounce-duration="300"></iron-ajax>
 
-
-<locals-contractlistener
+    <locals-contractlistener
       web3="{{web3}}"
       contractaddress="{{contractaddr}}" on-filter-match="_contractlistener"></locals-contractlistener>
 
-      <div class="canvas">
-      <locals-button txtcolor="green" on-tap="askEth">Balance: Ξ <span>{{balans}}</span> / Δ <span>{{localcoinbalance}}</span></locals-button>
-      </div>
+    <div class="canvas">
+      <locals-button txtcolor="green">Balance: Ξ <span>{{balans}}</span> / Δ <span>{{localcoinbalance}}</span></locals-button>
+    </div>
 
     <neon-animated-pages
-      selected="{{state}}"
-      attr-for-selected="key"
-      entry-animation="{{entryAnimation}}"
-      exit-animation="{{exitAnimation}}">
+        selected="{{state}}"
+        attr-for-selected="key"
+        entry-animation="{{entryAnimation}}"
+        exit-animation="{{exitAnimation}}">
 
       <neon-animatable key="0">
-      <div class="canvas">
-        <div class="props">
+        <div class="canvas">
+          <div class="props">
 
-        <locals-button icon="plus" txtcolor="blue" on-tap="createNew"></locals-button>
-        <div class="whitespace"></div>
+            <locals-button icon="plus" txtcolor="blue" on-tap="createNew"></locals-button>
+            <div class="whitespace"></div>
 
-        <p on-tap="reverseSorting">FILTER/SORT</p>
+            <p on-tap="reverseSorting">FILTER/SORT</p>
 
-        <iron-selector selected="{{selectedindex}}" attr-for-selected="key" on-iron-select="_showdetail">
+            <iron-selector selected="{{selectedindex}}" attr-for-selected="key" on-iron-select="_showdetail">
 
-          <template is="dom-repeat" items="{{proposals}}" id="proplist">
-          <div key="{{index}}">
+              <template is="dom-repeat" items="{{proposals}}" id="proplist">
 
-            <template is="dom-if" if="{{item.votingactive}}">
-            <div class="totalitem">
-            <locals-item>{{item.description}}</locals-item>
-            <locals-progress time size="32" start="{{item.startdate}}" round end="{{item.votingdeadline}}" bg="semiblue" fill="grey1"></locals-progress>
-            </div>
-            </template>
-
-          <template is="dom-if" if="{{!item.votingactive}}">
-            
-            <template is="dom-if" if="{{item.executed}}">
-              <template is="dom-if" if="{{item.passed}}">
-              <div class="totalitem pass">
-                <locals-item class="nonactive pass" key="{{index}}">{{item.description}}</locals-item>
-                <locals-icon icon="v" iconcolor="green" class="passed" small>
-                </locals-icon>
-              </div>
-              </template>
-              <template is="dom-if" if="{{!item.passed}}">
-              <div class="totalitem">
-                <locals-item class="nonactive notpass" key="{{index}}">{{item.description}}</locals-item>
-                <locals-icon icon="slash" iconcolor="grey5" class="notpassed" small></locals-icon>
-              </div>
-              </template>
-            </template>
-            <template is="dom-if" if="{{!item.executed}}">
-            <div class="totalitem">
-              <locals-item class="nonactive toexecute" key="{{index}}">{{item.description}}</locals-item>
-              <div>
-                <p class="execute">Execute!</p>
-              </div>
-            </div>
-            <!-- <locals-button small txtcolor="blue">Execute!</locals-button> -->
-            </template>
           
-          </template>
+                <div key="{{index}}">
+
+                  <template is="dom-if" if="{{item.votingactive}}">
+                    <div class="totalitem">
+                    <locals-item>{{item.description.descr}}</locals-item>
+                    <locals-progress time size="32" start="{{item.startdate}}" round end="{{item.votingdeadline}}" bg="semiblue" fill="grey1"></locals-progress>
+                    </div>
+                  </template>
+
+                  <template is="dom-if" if="{{!item.votingactive}}">
+            
+                    <template is="dom-if" if="{{item.executed}}">
+
+                      <template is="dom-if" if="{{item.passed}}">
+                        <div class="totalitem pass">
+                          <locals-item class="nonactive pass" key="{{index}}">{{item.description.descr}}</locals-item>
+                          <locals-icon icon="v" iconcolor="green" class="passed" small>
+                          </locals-icon>
+                        </div>
+                      </template>
+
+                      <template is="dom-if" if="{{!item.passed}}">
+                        <div class="totalitem">
+                          <locals-item class="nonactive notpass" key="{{index}}">{{item.description.descr}}</locals-item>
+                          <locals-icon icon="slash" iconcolor="grey5" class="notpassed" small></locals-icon>
+                        </div>
+                      </template>
+
+                    </template>
+
+                    <template is="dom-if" if="{{!item.executed}}">
+
+                      <div class="totalitem">
+                        <locals-item class="nonactive toexecute" key="{{index}}">{{item.description.descr}}</locals-item>
+                        <div>
+                          <p class="execute">Execute!</p>
+                        </div>
+                      </div>
+                     <locals-button small txtcolor="blue">Execute!</locals-button>
+                    </template>
+          
+                  </template>
+
+                </div>
+
+              </template>
+            </iron-selector>
 
           </div>
-        </template>
-        </iron-selector>
-
         </div>
-      </div>
       </neon-animatable>
 
       <!-- detailview -->
       <neon-animatable key="1">
-      <div class="canvas">
-        <locals-button icon="list" on-tap="back"></locals-button>
-        <div class="whitespace"></div>
-        <alabs-proposal id="proposal" class="props" web3="{{web3}}" account="{{account}}" data="{{selecteditem}}" ipfshash="{{selectedhash}}"></alabs-proposal>
-      </div>
+        <div class="canvas">
+          <locals-button icon="list" on-tap="back"></locals-button>
+          <div class="whitespace"></div>
+          <alabs-proposal id="proposal" class="props" web3="{{web3}}" account="{{account}}" data="{{selecteditem}}" ipfshash="{{selectedhash}}"></alabs-proposal>
+        </div>
       </neon-animatable>
 
       <!-- nieuwe aanmaken -->
       <neon-animatable key="2">
-      <div class="canvas">
-        <locals-button icon="list" on-tap="back"></locals-button>
-        <alabs-proposal id="newproposal" contractaddr="{{contractaddr}}" edit account="{{account}}" web3="{{web3}}" on-proposal-added="back"></alabs-proposal>
-      </div>
+        <div class="canvas">
+          <locals-button icon="list" on-tap="back"></locals-button>
+          <alabs-proposal id="newproposal" contractaddr="{{contractaddr}}" edit account="{{account}}" web3="{{web3}}" on-proposal-added="back"></alabs-proposal>
+        </div>
       </neon-animatable>
       
     </neon-animated-pages>
@@ -285,6 +296,10 @@ Example:
         observer: '_balance'
       },
 
+      coincontract: {
+        type: String
+      },
+
       entryAnimation: {
         type: String,
         value:"slide-from-right-animation"
@@ -317,7 +332,7 @@ Example:
       */
       contractaddr: {
         type: String,
-        value: '0xA39De4D5c20C7732761D4dd7779301ef7Ce0392e'
+        value: '0x30e0Ad44Df3cB121Cc26820bBBfa9371faa64dCE'
       },
 
       /** The contract application blockchain interface.
@@ -377,7 +392,7 @@ Example:
 
     getLocalcoinBalance: function(){
       var MyCoinContract = this.web3.eth.contract(this.coincontractabi);
-      var myCoinContractInstance = MyCoinContract.at('0x53F6E368f4a99c5b717EfF80c7f8175E0e45C0cC');
+      var myCoinContractInstance = MyCoinContract.at(this.coincontract);
       var account = this.fixaddress(this.account);
       var coinbalance = myCoinContractInstance.balanceOf(account).toNumber();
       //console.log(this.account, ' current localcoin balance: ', coinbalance);
@@ -401,11 +416,14 @@ Example:
       var self = this;
       var MyContract = this.web3.eth.contract(this.contractabi);
       var myContractInstance = MyContract.at(this.contractaddr);
+      //var totalprop = 1;
       var totalprop = myContractInstance.numProposals().toNumber();
+      this.coincontract = myContractInstance.sharesTokenAddress();
       var debatingperiod = myContractInstance.debatingPeriodInMinutes().toNumber();
 
       this.proposals = [];
       for (var i = totalprop - 1; i >= 0; i--) {
+        var _description = null;
         //Things[i];
         var prop = myContractInstance.proposals(i);
         var voteactive;
@@ -414,11 +432,21 @@ Example:
         } else { 
           voteactive = false;
         };
+
+
+        try {
+          JSON.parse(prop[2]);
+          _description = JSON.parse(prop[2]);
+        } catch (e) {
+          console.log('JSON is false');
+          _description = prop[2];
+        };
+
         var cleanprop = {
           index: i,
           recipient: prop[0],
           amount: prop[1].toNumber(),
-          description: prop[2],
+          description: _description,
           votingdeadline: prop[3].toNumber(),
           votingactive: voteactive,
           executed: prop[4],
@@ -446,6 +474,7 @@ Example:
 
     _balance: function(){
         this.balans = Math.round(this.balance / 1e16)/100;
+        if(this.balance>0.1){};
     },
 
     askEth: function(){
