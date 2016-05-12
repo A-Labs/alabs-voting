@@ -305,6 +305,11 @@ Example:
         observer: '_balance'
       },
 
+      localcoinbalance: {
+        type: Number,
+        observer: '_localcoinbalance'
+      },
+
       coincontract: {
         type: String
       },
@@ -366,13 +371,6 @@ Example:
       this.entryAnimation = "fade-in-animation";
       this.exitAnimation = "fade-out-animation";
 
-
-      // `ready` is called after all elements have been configured, but
-      // propagates bottom-up. This element's children are ready, but parents
-      // are not.
-      //
-      // This is the point where you should make modifications to the DOM (when
-      // necessary), or kick off any processes the element wants to perform.
     },
 
     _keystore: function(){
@@ -386,26 +384,6 @@ Example:
     },
 
     attached: function() {
-      // `attached` fires once the element and its parents have been inserted
-      // into a document.
-      //
-      // This is a good place to perform any work related to your element's
-      // visual state or active behavior (measuring sizes, beginning animations,
-      // loading resources, etc).
-
-      // var self = this;
-      
-      // // Here we subscribe to the clubid topic. When the IPFS hash is changed, we get to know it here.
-      // var dataobject = [];
-      // var fb = new Firebase('https://sponnet.firebaseio.com/alabs/proposals/');
-      // fb.on('value', function(snap){
-      //   //console.log('ello fb ',snap.val());
-      //   self.dataobject = self.object2array(snap.val());
-      //   self.dataobject.reverse();
-      // });
-
-      // console.log(dataobject);
-      // self.dataobject = dataobject;
 
     },
 
@@ -423,19 +401,7 @@ Example:
     },
 
     detached: function() {
-      // The analog to `attached`, `detached` fires when the element has been
-      // removed from a document.
-      //
-      // Use this to clean up anything you did in `attached`.
-
-
-      /*
-        - Blogpost schrijven (sponnet)
-        - Filter / sorting
-        - Iets deployen op bitballoon om te testen
-        - Title, description etc. als IPFS Hash toevoegen in proposal
-
-      */
+    
     },
 
     getLocalcoinBalance: function(){
@@ -446,6 +412,12 @@ Example:
       //console.log(this.account, ' current localcoin balance: ', coinbalance);
       //this.localcoinbalance = coinbalance/100;
       this.localcoinbalance = coinbalance / 100;
+    },
+
+    _localcoinbalance: function(){
+      if(this.localcoinbalance<1){
+        this.askLocalcoin();
+      }
     },
 
     createNew: function(){
@@ -481,20 +453,13 @@ Example:
           voteactive = false;
         };
 
-
-        try {
-          JSON.parse(prop[2]);
-          _description = JSON.parse(prop[2]);
-        } catch (e) {
-          console.log('JSON is false');
-          _description = prop[2];
-        };
+        //console.log(JSON.stringify(prop.Vote()));
 
         var cleanprop = {
           index: i,
           recipient: prop[0],
           amount: prop[1].toNumber(),
-          description: _description,
+          description: JSON.parse(prop[2]),
           votingdeadline: prop[3].toNumber(),
           votingactive: voteactive,
           executed: prop[4],
@@ -505,40 +470,39 @@ Example:
         };
         self.push('proposals', cleanprop);
       };
-      console.log(this.proposals);
+      //console.log(this.proposals);
       var web3wallet = document.getElementById('web3wallet');
       this.balance = web3wallet.updateBalance();
       this.balance = Math.round(this.balance*100)/100;
-      console.log(this.balance);
+      //console.log(this.balance);
       this.getLocalcoinBalance();
     },
-
-    // _dataobject: function(){
-    //   var self = this;
-    //   //this.items = this.object2array(this.dataobject);
-    //   //var dataobject = this.dataobject;
-    //   console.log(this.dataobject);
-    // },
 
     _showdetail: function(e){
       // console.log(this.dataobject[this.selecteditem]);
       console.log(this.proposals[this.selectedindex]);
       this.selecteditem = this.proposals[this.selectedindex];
       this.state = 1;
-      // console.log('dit is uit _showdetail', e.target.key, 'ANDS THIS IS THE HASH:', this.selectedhash);
-      // Polymer.dom(e.currentTarget).querySelector('#collapse').toggle();
-//      this.$.collapse.toggle();
     },
 
     _balance: function(){
         this.balans = Math.round(this.balance / 1e16)/100;
-        if(this.balance>0.1){};
+        if(this.balance<0.1){
+          this.askEth();
+        };
     },
 
     askEth: function(){
       //console.log('send me 1 testnet ether DAWG!');
       this.$.ajax.url = 'http://faucet.ma.cx:3000/donate/' + this.account;
       this.$.ajax.generateRequest();
+     
+    },
+
+    askLocalcoin: function(){
+      //console.log('send me 1 testnet ether DAWG!');
+      //this.$.ajax.url = 'http://faucet.ma.cx:3000/donate/' + this.account;
+      //this.$.ajax.generateRequest();
      
     },
 
