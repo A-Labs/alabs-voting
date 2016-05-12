@@ -174,30 +174,21 @@ Example:
         exit-animation="{{exitAnimation}}">
 
       <neon-animatable key="0">
-      <div class="canvas">
+
+              <div class="canvas">
         <div class="layout horizontal">
         <locals-button icon="plus" txtcolor="blue" on-tap="createNew"></locals-button>
-<!--         <div class="whitespace"></div>
- -->
-        <locals-dropdown attrselected="filter" selecteditem="all proposals">
+<!--         <div class="whitespace"></div> -->
+<!--         <locals-dropdown attrselected="filter" selecteditem="all proposals">
         <locals-item filter="all proposals">all proposals</locals-item>
         <locals-item filter="toexecute">proposals to execute</locals-item>
         <locals-item filter="passed">proposals passed</locals-item>
         <locals-item filter="not passed">proposals not passed</locals-item>
-        </locals-dropdown>
+        </locals-dropdown> -->
         </div>
 
         <div class="props">
         <iron-selector selected="{{selectedindex}}" attr-for-selected="key" on-iron-select="_showdetail">
-        <div class="canvas">
-          <div class="props">
-
-            <locals-button icon="plus" txtcolor="blue" on-tap="createNew"></locals-button>
-            <div class="whitespace"></div>
-
-            <p on-tap="reverseSorting">FILTER/SORT</p>
-
-            <iron-selector selected="{{selectedindex}}" attr-for-selected="key" on-iron-select="_showdetail">
 
               <template is="dom-repeat" items="{{proposals}}" id="proplist">
 
